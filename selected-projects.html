@@ -1,0 +1,797 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>小白作品集 - 精选作品</title>
+    <style>
+      :root {
+        --ink: #171927;
+        --ink-2: #24273a;
+        --muted: #777b88;
+        --paper: #f6f3ed;
+        --surface: rgba(255, 255, 255, 0.76);
+        --surface-strong: #ffffff;
+        --line: rgba(23, 25, 39, 0.08);
+        --line-strong: rgba(23, 25, 39, 0.14);
+        --accent: #4f4a8d;
+        --accent-2: #7a70dd;
+        --blue-soft: #dceeff;
+        --pink-soft: #ffe6ef;
+        --cream: #fffaf0;
+        --shadow: 0 34px 96px rgba(46, 45, 67, 0.12);
+        --shadow-soft: 0 18px 54px rgba(46, 45, 67, 0.08);
+        font-family:
+          "SF Pro Display",
+          "Helvetica Neue",
+          "PingFang SC",
+          "Hiragino Sans GB",
+          "Microsoft YaHei",
+          sans-serif;
+        color: var(--ink);
+        background: var(--paper);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        min-width: 320px;
+        background:
+          radial-gradient(circle at 20% 8%, rgba(198, 210, 255, 0.34), transparent 24%),
+          radial-gradient(circle at 82% 12%, rgba(255, 218, 232, 0.28), transparent 25%),
+          radial-gradient(circle at 55% 56%, rgba(255, 255, 255, 0.72), transparent 31%),
+          linear-gradient(180deg, #fcfbf7 0%, #f3f0e9 100%);
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        background-image: radial-gradient(rgba(23, 25, 39, 0.08) 1px, transparent 1px);
+        background-size: 24px 24px;
+        mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.18), transparent 68%);
+        pointer-events: none;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      h1,
+      h2,
+      p {
+        margin-top: 0;
+      }
+
+      .projects-page {
+        padding: 56px clamp(18px, 4vw, 64px) 96px;
+      }
+
+      .hero {
+        position: relative;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(240px, 0.38fr);
+        gap: clamp(32px, 7vw, 96px);
+        align-items: center;
+        max-width: 1180px;
+        min-height: min(560px, 68vh);
+        margin: 0 auto 76px;
+      }
+
+      .hero-copy {
+        max-width: 720px;
+      }
+
+      .eyebrow {
+        margin: 0 0 12px;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 900;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        position: relative;
+        margin-bottom: 12px;
+        font-size: clamp(66px, 8vw, 124px);
+        font-weight: 950;
+        line-height: 0.86;
+        letter-spacing: -0.08em;
+      }
+
+      h1::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 4px;
+        z-index: -1;
+        width: 68%;
+        height: 0.28em;
+        border-radius: 999px;
+        background: linear-gradient(90deg, transparent, rgba(126, 112, 221, 0.16), transparent);
+      }
+
+      .hero-subtitle {
+        margin-bottom: 14px;
+        color: var(--ink-2);
+        font-size: clamp(17px, 1.8vw, 22px);
+        font-weight: 850;
+        letter-spacing: -0.02em;
+      }
+
+      .hero-description {
+        max-width: 760px;
+        margin-bottom: 24px;
+        color: var(--muted);
+        font-size: 15px;
+        font-weight: 680;
+        line-height: 1.9;
+      }
+
+      .hero-note {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 14px;
+        border: 1px solid rgba(23, 25, 39, 0.08);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.56);
+        color: rgba(23, 25, 39, 0.58);
+        font-size: 12px;
+        font-weight: 850;
+      }
+
+      .hero-note::before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--accent-2);
+        box-shadow: 0 0 0 5px rgba(124, 112, 216, 0.12);
+      }
+
+      .hero-media {
+        position: relative;
+        display: grid;
+        justify-items: center;
+        align-self: stretch;
+        align-content: center;
+      }
+
+      .hero-media::before {
+        content: "";
+        position: absolute;
+        inset: 16% -8% 6%;
+        z-index: -1;
+        border-radius: 38px;
+        background:
+          radial-gradient(circle at 40% 25%, rgba(255, 255, 255, 0.86), transparent 36%),
+          linear-gradient(145deg, rgba(255, 255, 255, 0.58), rgba(124, 112, 216, 0.1));
+        filter: blur(0.2px);
+      }
+
+      .ip-video {
+        width: clamp(188px, 22vw, 286px);
+        height: clamp(240px, 28vw, 360px);
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.86);
+        border-radius: 42px;
+        background: rgba(255, 255, 255, 0.66);
+        box-shadow: 0 26px 72px rgba(48, 46, 82, 0.14);
+      }
+
+      .ip-video video {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .scroll-hint {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 30px;
+        color: rgba(23, 25, 39, 0.48);
+        font-size: 11px;
+        font-weight: 900;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      .scroll-hint::before,
+      .scroll-hint::after {
+        content: "";
+        width: 42px;
+        height: 1px;
+        background: rgba(23, 25, 39, 0.16);
+      }
+
+      .project-list {
+        position: relative;
+        display: block;
+        max-width: 1180px;
+        margin: 0 auto;
+        padding-bottom: 18vh;
+      }
+
+      .project-card {
+        --tilt-x: 0deg;
+        --tilt-y: 0deg;
+        position: sticky;
+        top: var(--stack-top);
+        z-index: var(--stack-z);
+        display: grid;
+        grid-template-columns: minmax(280px, 0.92fr) minmax(430px, 1.18fr);
+        gap: clamp(26px, 4.5vw, 68px);
+        align-items: center;
+        min-height: clamp(470px, 70vh, 560px);
+        margin-bottom: clamp(34px, 6vh, 62px);
+        padding: clamp(32px, 4.6vw, 58px);
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.92);
+        border-radius: 34px;
+        background:
+          linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.66)),
+          var(--surface);
+        box-shadow: var(--shadow-soft);
+        opacity: 0;
+        transform: translateY(28px) scale(0.985);
+        transition:
+          opacity 520ms ease,
+          transform 360ms ease,
+          box-shadow 300ms ease,
+          border-color 300ms ease;
+      }
+
+      .project-card::after {
+        content: "";
+        position: absolute;
+        right: -110px;
+        bottom: -130px;
+        width: 300px;
+        height: 300px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(126, 112, 221, 0.14), transparent 68%);
+        pointer-events: none;
+      }
+
+      .project-card.is-inview {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+
+      .project-card:hover {
+        border-color: rgba(124, 112, 216, 0.25);
+        box-shadow: var(--shadow);
+        transform: translateY(-8px) scale(1);
+      }
+
+      .project-card.is-reversed {
+        grid-template-columns: minmax(430px, 1.18fr) minmax(280px, 0.92fr);
+      }
+
+      .project-card.is-reversed .project-info {
+        order: 2;
+      }
+
+      .project-card.is-reversed .project-visual {
+        order: 1;
+      }
+
+      .project-info {
+        position: relative;
+        z-index: 2;
+      }
+
+      .project-kicker {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 22px;
+        color: var(--muted);
+        font-size: 11px;
+        font-weight: 900;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .project-index {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 58px;
+        height: 28px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.68);
+        color: rgba(23, 25, 39, 0.52);
+      }
+
+      .project-meta-text {
+        color: rgba(23, 25, 39, 0.5);
+      }
+
+      .project-title {
+        margin-bottom: 12px;
+        color: var(--accent);
+        font-size: clamp(36px, 3.8vw, 56px);
+        font-weight: 950;
+        line-height: 1.02;
+        letter-spacing: -0.05em;
+      }
+
+      .project-description {
+        max-width: 470px;
+        color: #626779;
+        font-size: 14px;
+        font-weight: 750;
+        line-height: 1.88;
+      }
+
+      .project-statement {
+        margin-bottom: 0;
+      }
+
+      .project-facts {
+        display: grid;
+        gap: 12px;
+        margin-top: 22px;
+      }
+
+      .project-fact {
+        display: grid;
+        grid-template-columns: 66px 1fr;
+        gap: 12px;
+        align-items: start;
+        color: #34384f;
+        font-size: 13px;
+        line-height: 1.68;
+      }
+
+      .project-fact strong {
+        color: rgba(23, 25, 39, 0.42);
+        font-size: 12px;
+        font-weight: 950;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .project-fact span {
+        font-weight: 850;
+      }
+
+      .tag-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 9px;
+        margin: 24px 0 0;
+      }
+
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 31px;
+        padding: 7px 14px;
+        border: 1px solid rgba(23, 25, 39, 0.18);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.62);
+        color: #252940;
+        font-size: 12px;
+        font-weight: 900;
+        transition:
+          background 180ms ease,
+          color 180ms ease,
+          border-color 180ms ease,
+          transform 180ms ease;
+      }
+
+      .project-card:hover .tag:nth-child(2n + 1) {
+        border-color: rgba(79, 74, 143, 0.22);
+        background: rgba(124, 112, 216, 0.12);
+        color: var(--accent);
+        transform: translateY(-2px);
+      }
+
+      .details-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        min-height: 42px;
+        margin-top: 28px;
+        padding: 8px 16px 8px 19px;
+        border-radius: 999px;
+        background: #161720;
+        color: white;
+        font-size: 13px;
+        font-weight: 900;
+        box-shadow: 0 14px 32px rgba(23, 25, 39, 0.14);
+      }
+
+      .details-button span {
+        display: grid;
+        width: 25px;
+        height: 25px;
+        place-items: center;
+        border-radius: 50%;
+        background: white;
+        color: #171821;
+        transition: transform 220ms ease;
+      }
+
+      .project-card:hover .details-button span {
+        transform: translateX(5px);
+      }
+
+      .project-visual {
+        position: relative;
+        z-index: 2;
+        display: grid;
+        min-height: 380px;
+        place-items: center;
+        overflow: visible;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
+        transform: perspective(900px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+        transform-style: preserve-3d;
+        transition: transform 240ms ease, box-shadow 280ms ease;
+      }
+
+      .project-visual::after {
+        content: "XIAOBAI CASE STUDY";
+        position: absolute;
+        right: 26px;
+        bottom: 22px;
+        color: rgba(23, 25, 39, 0.34);
+        font-size: 10px;
+        font-weight: 900;
+        letter-spacing: 0.16em;
+      }
+
+      .image-stage {
+        position: relative;
+        display: grid;
+        width: 100%;
+        min-height: 100%;
+        place-items: center;
+        padding: 0;
+      }
+
+      .project-image {
+        position: relative;
+        z-index: 1;
+        width: min(94%, 640px);
+        height: auto;
+        object-fit: contain;
+        border-radius: 18px;
+        box-shadow: 0 32px 66px rgba(42, 45, 68, 0.14);
+        transition: transform 300ms ease, box-shadow 300ms ease;
+      }
+
+      .project-card:hover .project-image {
+        box-shadow: 0 38px 78px rgba(42, 45, 68, 0.18);
+        transform: translateY(-8px) scale(1.03);
+      }
+
+      .visual-stack .project-image {
+        position: absolute;
+        width: 66%;
+      }
+
+      .visual-stack .image-stage {
+        min-height: 380px;
+      }
+
+      .visual-stack .project-image:nth-child(1) {
+        top: 16%;
+        right: 6%;
+        transform: rotate(3deg);
+      }
+
+      .visual-stack .project-image:nth-child(2) {
+        left: 7%;
+        bottom: 15%;
+        width: 48%;
+        transform: rotate(-2.4deg);
+      }
+
+      .project-card:hover .visual-stack .project-image:nth-child(1) {
+        transform: translateY(-10px) rotate(2deg) scale(1.03);
+      }
+
+      .project-card:hover .visual-stack .project-image:nth-child(2) {
+        transform: translateY(-5px) rotate(-1.4deg) scale(1.03);
+      }
+
+      @media (max-width: 980px) {
+        .projects-page {
+          padding-inline: 18px;
+        }
+
+        .hero {
+          grid-template-columns: 1fr;
+          justify-items: center;
+          text-align: center;
+          min-height: auto;
+        }
+
+        .hero-copy {
+          display: grid;
+          justify-items: center;
+        }
+
+        h1::after {
+          left: 50%;
+          transform: translateX(-50%);
+        }
+
+        .project-list {
+          padding-bottom: 0;
+        }
+
+        .project-card,
+        .project-card.is-reversed {
+          position: relative;
+          top: auto;
+          grid-template-columns: 1fr;
+          min-height: auto;
+          margin-bottom: 28px;
+        }
+
+        .project-card.is-reversed .project-info,
+        .project-card.is-reversed .project-visual {
+          order: initial;
+        }
+
+        .project-card .project-info {
+          order: 2;
+        }
+
+        .project-visual {
+          order: -1;
+          min-height: 310px;
+        }
+      }
+
+      @media (max-width: 620px) {
+        .projects-page {
+          padding-top: 36px;
+          padding-bottom: 52px;
+        }
+
+        h1 {
+          font-size: 54px;
+        }
+
+        .hero {
+          margin-bottom: 38px;
+        }
+
+        .hero-description {
+          font-size: 14px;
+        }
+
+        .ip-video {
+          width: 132px;
+          height: 168px;
+          border-radius: 26px;
+        }
+
+        .scroll-hint {
+          display: none;
+        }
+
+        .project-card,
+        .project-card.is-reversed {
+          padding: 24px;
+          border-radius: 22px;
+        }
+
+        .project-kicker {
+          gap: 8px;
+          margin-bottom: 18px;
+        }
+
+        .project-title {
+          font-size: 32px;
+        }
+
+        .project-visual {
+          min-height: 238px;
+        }
+
+        .image-stage {
+          padding: 0;
+        }
+
+        .visual-stack .project-image {
+          width: 72%;
+        }
+
+        .visual-stack .image-stage {
+          min-height: 238px;
+        }
+
+        .tag {
+          font-size: 11px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+
+        *,
+        *::before,
+        *::after {
+          transition-duration: 0.001ms !important;
+          animation-duration: 0.001ms !important;
+          animation-iteration-count: 1 !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="projects-page">
+      <section class="hero" aria-labelledby="projects-title">
+        <div class="hero-copy">
+          <p class="eyebrow">SELECTED UI PROJECTS</p>
+          <h1 id="projects-title">精选作品</h1>
+          <p class="hero-subtitle">大厂夯实专业根基，创业团队沉淀实战能力</p>
+          <p class="hero-description">
+            以下项目覆盖 AI 原生产品、0-1 创新项目、内容平台体验、复杂业务设计与增长转化场景。
+          </p>
+          <div class="hero-note">4 个精选案例，展示从判断到落地的完整设计能力</div>
+          <div class="scroll-hint">Scroll to stack cases</div>
+        </div>
+        <div class="hero-media">
+          <div class="ip-video" aria-label="小白 IP 动态形象">
+            <video autoplay muted loop playsinline>
+              <source src="assets/ip/xiaobai-selected-projects-u2net.webm" type="video/webm" />
+              <source src="assets/ip/xiaobai-selected-projects.mp4" type="video/mp4" />
+            </video>
+          </div>
+        </div>
+      </section>
+
+      <section class="project-list" id="project-list" aria-label="精选项目列表"></section>
+    </main>
+
+    <script>
+      const projects = [
+        {
+          year: "2026年",
+          title: "围炉&蜜薯 小说APP",
+          meta: "2026 · 追觅创新项目 · C端 UI/UX",
+          statement: "围绕阅读激励、福利盲盒与内容消费路径，完成从体验策略到高保真界面的设计探索。",
+          tags: ["体验设计师", "UI 设计", "视觉方案", "AI 辅助设计流程"],
+          value: "探索小说阅读产品中的激励机制、任务体系与福利转化路径，提升用户停留和活动参与意愿。",
+          images: ["assets/projects/weilu-cover.png", "assets/projects/mishu-cover.png"]
+        },
+        {
+          year: "2026年",
+          title: "AI创新项目实践",
+          meta: "2026 · 追觅创新项目 · C端 UI/产品",
+          statement: "围绕 AI 辅助生活服务、信息理解与交互效率，参与从概念验证到体验落地的设计过程。",
+          tags: ["AI 辅助全链路设计", "0-1项目", "AI场景探索", "产品逻辑梳理"],
+          value: "在不确定需求中拆解用户场景，完成 AI 产品从概念、流程到界面的体验表达。",
+          images: ["assets/projects/kelu-cover.png"]
+        },
+        {
+          year: "2025年",
+          title: "AI出海内容创作工作台",
+          meta: "2025 · TOPICK AI · B端工具",
+          statement: "面向视频创作者设计 AI 生成与创作管理工作台，覆盖选题、生成、编辑与发布流程。",
+          tags: ["AI 产品体验设计策略", "AI 工作流", "出海产品", "交互设计"],
+          value: "沉淀 AI 创作工具的核心工作流，提升内容生成、编辑与管理的效率。",
+          images: ["assets/projects/ai-project-cover.png"]
+        },
+        {
+          year: "2024年",
+          title: "团队向 · 文库AI项目",
+          meta: "2024 · 百度文库 · AIGC 内容平台",
+          statement: "参与百度文库 AI PPT 专项体验升级，优化生成式内容工具的使用路径、结果呈现与编辑体验。",
+          tags: ["AB测试", "数据驱动优化", "体验升级", "AIGC", "团队项目"],
+          value: "通过专项体验优化，提升 AI PPT 工具链路的清晰度、使用效率和结果感知。",
+          images: ["assets/projects/baidu-wenku-cover.png"]
+        }
+      ];
+
+      const projectList = document.querySelector("#project-list");
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      function renderProjects() {
+        projectList.innerHTML = projects
+          .map((project, index) => {
+            const visualClass = project.images.length > 1 ? "project-visual visual-stack" : "project-visual";
+            const cardClass = index % 2 === 1 ? "project-card is-reversed" : "project-card";
+            const images = project.images
+              .map((image) => `<img class="project-image" src="${image}" alt="${project.title} 项目封面">`)
+              .join("");
+
+            return `
+              <article
+                class="${cardClass}"
+                style="--stack-top: ${24 + index * 16}px; --stack-z: ${index + 1};"
+              >
+                <div class="project-info">
+                  <div class="project-kicker">
+                    <span class="project-index">Case ${String(index + 1).padStart(2, "0")}</span>
+                    <span class="project-meta-text">${project.meta}</span>
+                  </div>
+                  <h2 class="project-title">${project.title}</h2>
+                  <p class="project-description project-statement">${project.statement}</p>
+                  <div class="project-facts">
+                    <p class="project-fact"><strong>VALUE</strong><span>${project.value}</span></p>
+                  </div>
+                  <div class="tag-list">
+                    ${project.tags.map((tag) => `<span class="tag">${tag}</span>`).join("")}
+                  </div>
+                  <a class="details-button" href="#" aria-label="查看 ${project.title} 项目详情">View details <span>→</span></a>
+                </div>
+                <div class="${visualClass}">
+                  <div class="image-stage">
+                    ${images}
+                  </div>
+                </div>
+              </article>
+            `;
+          })
+          .join("");
+      }
+
+      function bindCardInteractions() {
+        const cards = document.querySelectorAll(".project-card");
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("is-inview");
+              }
+            });
+          },
+          { threshold: 0.18 }
+        );
+
+        cards.forEach((card) => {
+          observer.observe(card);
+
+          if (reduceMotion) return;
+
+          const visual = card.querySelector(".project-visual");
+          card.addEventListener("pointermove", (event) => {
+            const rect = card.getBoundingClientRect();
+            const x = (event.clientX - rect.left) / rect.width - 0.5;
+            const y = (event.clientY - rect.top) / rect.height - 0.5;
+            visual.style.setProperty("--tilt-y", `${x * 3.2}deg`);
+            visual.style.setProperty("--tilt-x", `${y * -2.2}deg`);
+          });
+
+          card.addEventListener("pointerleave", () => {
+            visual.style.setProperty("--tilt-y", "0deg");
+            visual.style.setProperty("--tilt-x", "0deg");
+          });
+        });
+      }
+
+      renderProjects();
+      bindCardInteractions();
+    </script>
+  </body>
+</html>
