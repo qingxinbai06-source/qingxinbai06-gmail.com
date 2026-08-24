@@ -1,0 +1,29 @@
+.DS_Store
+
+# Local runtimes and generated caches
+.u2net-lite-env/
+.u2net-video-env/
+.swift-module-cache/
+lib/
+bin/
+
+# Installers and local app bundles
+*.dmg
+*.zip
+Figma.app/
+figwright/
+
+# Large local ML models and source videos
+assets/bai-qingxin/models/
+assets/bai-qingxin/source-video/
+*.onnx
+
+# Intermediate frame exports
+assets/bai-qingxin/u2net_frames/
+生成图片-6_png_frames/
+生成图片-6_webp_frames/
+生成图片-6_webp_frames_ffmpeg/
+
+# Local-only scratch/previews
+svg_preview/
+logo_wall_preview/
