@@ -39,43 +39,88 @@
 
       .hero {
         position: relative;
+        --reveal-x: 50%;
+        --reveal-y: 50%;
+        --reveal-size: 0px;
         min-height: 100vh;
         scroll-snap-align: start;
         isolation: isolate;
         overflow: hidden;
-        background:
-          radial-gradient(ellipse at 50% 88%, rgba(255, 255, 255, 0.34), transparent 46%),
-          radial-gradient(ellipse at 22% 18%, rgba(255, 255, 255, 0.18), transparent 34%),
-          linear-gradient(116deg, rgba(255, 255, 255, 0.16), rgba(151, 158, 194, 0.13) 54%, rgba(255, 255, 255, 0.12)),
-          var(--bg);
+        background: #ececf6;
       }
 
       .hero::before {
         content: "";
         position: absolute;
         inset: 0;
-        z-index: 0;
+        z-index: 1;
         pointer-events: none;
-        background-image: radial-gradient(circle, rgba(255, 255, 255, 0.38) 0 1px, transparent 1.2px);
-        background-size: 20px 20px;
-        opacity: 0.3;
-        mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0.2) 74%, rgba(0, 0, 0, 0.08));
+        background:
+          radial-gradient(ellipse at 18% 46%, rgba(244, 244, 251, 0.64), transparent 46%),
+          linear-gradient(90deg, rgba(226, 226, 240, 0.72) 0%, rgba(232, 232, 244, 0.56) 29%, rgba(248, 248, 252, 0.14) 58%, transparent 100%);
+        opacity: 0.9;
       }
 
       .hero::after {
         content: "";
         position: absolute;
         inset: auto 0 0;
-        z-index: 0;
+        z-index: 1;
         height: 38vh;
         pointer-events: none;
         background:
-          radial-gradient(ellipse at 50% 100%, rgba(72, 79, 118, 0.16), transparent 54%),
-          linear-gradient(to top, rgba(255, 255, 255, 0.2), transparent);
+          radial-gradient(ellipse at 68% 100%, rgba(255, 255, 255, 0.72), transparent 58%),
+          linear-gradient(to top, rgba(242, 243, 250, 0.74), transparent);
+      }
+
+      .hero-reveal {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        overflow: hidden;
+        pointer-events: none;
+      }
+
+      .hero-reveal img {
+        position: absolute;
+        inset: 0;
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: right center;
+        user-select: none;
+      }
+
+      .hero-reveal-after {
+        opacity: 0;
+        mask-image: radial-gradient(
+          circle var(--reveal-size) at var(--reveal-x) var(--reveal-y),
+          #000 0%,
+          #000 58%,
+          rgba(0, 0, 0, 0.58) 74%,
+          transparent 100%
+        );
+        -webkit-mask-image: radial-gradient(
+          circle var(--reveal-size) at var(--reveal-x) var(--reveal-y),
+          #000 0%,
+          #000 58%,
+          rgba(0, 0, 0, 0.58) 74%,
+          transparent 100%
+        );
+        transition: opacity 180ms ease;
+      }
+
+      .hero.is-revealing {
+        cursor: default;
+      }
+
+      .hero.is-revealing .hero-reveal-after {
+        opacity: 1;
       }
 
       .nav {
-        position: fixed;
+        position: absolute;
         top: 0;
         left: 0;
         right: 0;
@@ -86,9 +131,9 @@
         gap: clamp(18px, 2.5vw, 36px);
         height: 74px;
         padding: 21px clamp(22px, 4.6vw, 68px);
-        background: rgba(200, 203, 224, 0.38);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.16);
-        backdrop-filter: blur(18px);
+        background: rgba(247, 247, 252, 0.12);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(12px);
       }
 
       .brand {
@@ -97,15 +142,32 @@
         gap: 0;
         min-width: 0;
         text-decoration: none;
-        color: var(--white);
+        color: #191922;
+      }
+
+      .brand-mark {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 22px;
+        height: 22px;
+        margin-right: 12px;
+        border-radius: 50%;
+        background: #191922;
+        color: #ffffff;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 13px;
+        font-weight: 900;
+        line-height: 1;
       }
 
       .brand-name {
         overflow: hidden;
-        font-size: 14px;
-        font-weight: 800;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 13px;
+        font-style: italic;
+        font-weight: 900;
         letter-spacing: 0.16em;
-        text-shadow: 0 10px 28px rgba(82, 88, 126, 0.12);
         line-height: 1;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -115,8 +177,8 @@
         flex: 1 1 auto;
         height: 1px;
         min-width: 80px;
-        background: linear-gradient(90deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.58), rgba(255, 255, 255, 0.18));
-        opacity: 0.78;
+        background: transparent;
+        opacity: 0;
       }
 
       .nav-right {
@@ -132,19 +194,18 @@
       }
 
       .nav-links a {
-        color: rgba(255, 255, 255, 0.72);
-        font-size: 13px;
-        font-weight: 750;
-        letter-spacing: 0.08em;
+        color: rgba(15, 16, 24, 0.78);
+        font-size: 12px;
+        font-weight: 560;
+        letter-spacing: 0.01em;
         line-height: 1;
         text-decoration: none;
-        text-transform: uppercase;
         white-space: nowrap;
         transition: color 160ms ease, opacity 160ms ease;
       }
 
       .nav-links a:hover {
-        color: rgba(255, 255, 255, 0.96);
+        color: rgba(15, 16, 24, 1);
       }
 
       .contact {
@@ -152,107 +213,121 @@
         align-items: center;
         justify-content: center;
         min-width: 86px;
-        height: 32px;
-        padding: 0 15px;
-        border-radius: 4px;
-        background: var(--lime);
-        color: var(--ink);
-        font-size: 13px;
-        font-weight: 850;
+        height: 26px;
+        padding: 0 28px;
+        border-radius: 999px;
+        background: #1b1b20;
+        color: #ffffff;
+        font-size: 12px;
+        font-weight: 520;
         line-height: 1;
         text-decoration: none;
-        box-shadow: 0 10px 22px rgba(105, 129, 44, 0.14);
+        box-shadow: 0 12px 28px rgba(24, 25, 32, 0.14);
         transition: transform 180ms ease, box-shadow 180ms ease;
       }
 
       .contact:hover {
         transform: translateY(-1px);
-        box-shadow: 0 14px 28px rgba(105, 129, 44, 0.18);
+        box-shadow: 0 16px 34px rgba(24, 25, 32, 0.18);
       }
 
       .hero-stage {
         position: relative;
-        z-index: 1;
-        display: grid;
+        z-index: 2;
+        display: block;
         min-height: 100vh;
-        place-items: center;
         padding: 92px clamp(20px, 5vw, 78px) 0;
       }
 
-      .hero-kicker {
+      .hero-copy-block {
         position: absolute;
-        top: clamp(108px, 14vh, 142px);
-        left: clamp(24px, 6vw, 86px);
+        left: clamp(44px, 7vw, 92px);
+        top: clamp(168px, 28vh, 220px);
         z-index: 4;
+        width: min(700px, 55vw);
+        color: #0b0b10;
+      }
+
+      .hero-kicker {
+        display: inline-flex;
+        align-items: center;
+        gap: 11px;
+        position: relative;
+        top: auto;
+        left: auto;
+        z-index: auto;
         margin: 0;
-        color: rgba(255, 255, 255, 0.64);
-        font-size: 12px;
-        font-weight: 760;
-        letter-spacing: 0.16em;
-        line-height: 1.4;
+        color: rgba(18, 20, 31, 0.46);
+        font-size: 11px;
+        font-weight: 720;
+        letter-spacing: 0.14em;
+        line-height: 1;
         text-transform: uppercase;
+      }
+
+      .hero-kicker::before {
+        content: "";
+        width: 34px;
+        height: 1px;
+        background: rgba(18, 20, 31, 0.28);
       }
 
       .hero-title {
-        position: absolute;
-        top: clamp(126px, 16vh, 162px);
-        left: 50%;
-        z-index: 1;
-        width: min(1280px, 96vw);
-        margin: 0;
-        transform: translateX(-50%);
-        color: rgba(255, 255, 255, 0.94);
-        font-family: Impact, Haettenschweiler, "Arial Narrow Bold", "Arial Black", sans-serif;
-        font-size: clamp(86px, 15.2vw, 218px);
-        font-stretch: condensed;
-        font-weight: 900;
-        letter-spacing: 0.045em;
-        line-height: 0.8;
-        text-align: center;
-        text-transform: uppercase;
-        white-space: nowrap;
-        text-shadow: 0 20px 54px rgba(104, 111, 148, 0.16);
+        position: relative;
+        top: auto;
+        left: auto;
+        z-index: auto;
+        width: 100%;
+        margin: 28px 0 0;
+        transform: none;
+        color: #0b0b10;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font-size: clamp(52px, 5.7vw, 82px);
+        font-weight: 470;
+        letter-spacing: 0.012em;
+        line-height: 1.18;
+        text-align: left;
+        text-transform: none;
+        white-space: normal;
+        text-shadow: none;
       }
 
       .role {
-        position: absolute;
-        left: clamp(24px, 9vw, 132px);
-        top: clamp(330px, 48vh, 440px);
-        z-index: 4;
-        margin: 0;
-        color: rgba(255, 255, 255, 0.92);
-        font-size: clamp(12px, 1vw, 15px);
-        font-weight: 800;
-        letter-spacing: 0.14em;
-        line-height: 1.25;
-        text-transform: uppercase;
-        text-shadow: 0 10px 26px rgba(86, 94, 132, 0.18);
+        position: relative;
+        left: auto;
+        top: auto;
+        z-index: auto;
+        margin: clamp(50px, 7.6vh, 76px) 0 0;
+        color: rgba(18, 20, 31, 0.66);
+        font-size: clamp(19px, 1.75vw, 25px);
+        font-weight: 440;
+        letter-spacing: 0.01em;
+        line-height: 1.35;
+        text-transform: none;
+        text-shadow: none;
       }
 
       .role::before {
-        content: "";
-        display: block;
-        width: 56px;
-        height: 1px;
-        margin-bottom: 17px;
-        background: rgba(255, 255, 255, 0.64);
+        display: none;
       }
 
       .hero-copy {
-        position: absolute;
-        left: clamp(24px, 9vw, 132px);
-        bottom: clamp(72px, 10vh, 118px);
-        z-index: 4;
-        max-width: 285px;
-        margin: 0;
-        color: rgba(255, 255, 255, 0.68);
-        font-size: 13px;
-        font-weight: 560;
-        line-height: 1.72;
-        text-shadow: 0 10px 28px rgba(86, 94, 132, 0.12);
+        position: relative;
+        left: auto;
+        top: auto;
+        bottom: auto;
+        z-index: auto;
+        max-width: 680px;
+        margin: 14px 0 0;
+        color: rgba(18, 20, 31, 0.56);
+        font-size: clamp(18px, 1.62vw, 23px);
+        font-weight: 420;
+        line-height: 1.5;
+        text-shadow: none;
       }
 
       .hero-status {
+        display: none;
         position: absolute;
         right: clamp(24px, 6vw, 86px);
         top: clamp(292px, 42vh, 390px);
@@ -293,6 +368,7 @@
       }
 
       .character-wrap {
+        display: none;
         position: absolute;
         left: 50%;
         bottom: -3vh;
@@ -341,6 +417,7 @@
       }
 
       .ground {
+        display: none;
         position: absolute;
         left: 50%;
         bottom: -5vh;
@@ -356,6 +433,7 @@
       }
 
       .scroll-cue {
+        display: none;
         position: absolute;
         right: clamp(24px, 6vw, 86px);
         bottom: 32px;
@@ -379,6 +457,7 @@
       }
 
       .noise {
+        display: none;
         position: absolute;
         inset: auto 0 0;
         z-index: 0;
@@ -1723,8 +1802,8 @@
 
       .ability-stage {
         position: relative;
-        min-height: 650px;
-        margin-top: clamp(28px, 3.8vw, 46px);
+        min-height: 690px;
+        margin-top: clamp(26px, 3.4vw, 42px);
       }
 
       .ability-connectors {
@@ -1739,7 +1818,7 @@
 
       .ability-connectors path {
         fill: none;
-        stroke: rgba(90, 99, 137, 0.14);
+        stroke: rgba(90, 99, 137, 0.1);
         stroke-width: 1.35;
         stroke-linecap: round;
         stroke-dasharray: 4 12;
@@ -1748,11 +1827,11 @@
       .ability-character {
         position: absolute;
         left: 50%;
-        bottom: 10%;
+        bottom: 7.5%;
         z-index: 2;
         display: grid;
-        width: min(32vw, 390px);
-        min-width: 300px;
+        width: min(30vw, 370px);
+        min-width: 285px;
         transform: translateX(-50%);
         place-items: end center;
         pointer-events: none;
@@ -1775,7 +1854,7 @@
       .ability-character img {
         display: block;
         width: 100%;
-        max-height: min(470px, 52vh);
+        max-height: min(450px, 49vh);
         object-fit: contain;
         object-position: center bottom;
         border-radius: 8px;
@@ -1786,7 +1865,7 @@
       .mood-label {
         position: absolute;
         left: 50%;
-        bottom: clamp(84px, 10vw, 116px);
+        bottom: clamp(78px, 9vw, 108px);
         z-index: 5;
         display: inline-flex;
         align-items: center;
@@ -1862,9 +1941,9 @@
       .ability-card.product {
         --card-accent: #7a55ff;
         --card-glow: #7a55ff;
-        left: 12%;
-        top: 8%;
-        transform: rotate(-11deg);
+        left: 10%;
+        top: 5%;
+        transform: rotate(-12deg);
         --ability-float: 6s;
         --ability-float-y: -5px;
       }
@@ -1880,7 +1959,7 @@
         --card-accent: #6b78ff;
         --card-glow: #7aa8ff;
         left: 50%;
-        top: 1%;
+        top: -1%;
         width: min(345px, 26vw);
         min-height: 184px;
         transform: translateX(-50%) rotate(0deg);
@@ -1900,9 +1979,9 @@
       .ability-card.growth {
         --card-accent: #ff68b6;
         --card-glow: #d9ff43;
-        right: 12%;
-        top: 8%;
-        transform: rotate(11deg);
+        right: 10%;
+        top: 5%;
+        transform: rotate(12deg);
         --ability-float: 6.6s;
         --ability-delay: -0.8s;
         --ability-float-y: -6px;
@@ -1983,15 +2062,16 @@
         position: relative;
         z-index: 2;
         display: grid;
-        grid-template-columns: minmax(0, 1fr) minmax(220px, 0.38fr);
-        gap: clamp(32px, 7vw, 96px);
-        align-items: center;
+        justify-items: center;
         width: min(1180px, calc(100vw - 44px));
-        min-height: min(500px, 62vh);
-        margin: 0 auto clamp(54px, 6vw, 76px);
+        min-height: auto;
+        margin: 0 auto clamp(48px, 5.4vw, 70px);
+        text-align: center;
       }
 
       .work-hero-copy {
+        display: grid;
+        justify-items: center;
         max-width: 720px;
       }
 
@@ -2019,11 +2099,12 @@
       .work-hero-title::after {
         content: "";
         position: absolute;
-        left: 0;
+        left: 50%;
         bottom: 4px;
         z-index: -1;
         width: 68%;
         height: 0.28em;
+        transform: translateX(-50%);
         border-radius: 999px;
         background: linear-gradient(90deg, transparent, rgba(126, 112, 221, 0.16), transparent);
       }
@@ -2038,7 +2119,7 @@
 
       .work-hero-description {
         max-width: 760px;
-        margin: 0 0 24px;
+        margin: 0 auto 24px;
         color: rgba(32, 36, 56, 0.58);
         font-size: 15px;
         font-weight: 680;
@@ -2065,43 +2146,6 @@
         border-radius: 50%;
         background: #7a70dd;
         box-shadow: 0 0 0 5px rgba(124, 112, 216, 0.12);
-      }
-
-      .work-hero-media {
-        position: relative;
-        display: grid;
-        align-self: stretch;
-        align-content: center;
-        justify-items: center;
-      }
-
-      .work-hero-media::before {
-        content: "";
-        position: absolute;
-        inset: 16% -8% 6%;
-        z-index: -1;
-        border-radius: 38px;
-        background:
-          radial-gradient(circle at 40% 25%, rgba(255, 255, 255, 0.86), transparent 36%),
-          linear-gradient(145deg, rgba(255, 255, 255, 0.58), rgba(124, 112, 216, 0.1));
-        filter: blur(0.2px);
-      }
-
-      .work-ip-video {
-        width: clamp(188px, 22vw, 286px);
-        height: clamp(240px, 28vw, 360px);
-        overflow: hidden;
-        border: 1px solid rgba(255, 255, 255, 0.86);
-        border-radius: 42px;
-        background: rgba(255, 255, 255, 0.66);
-        box-shadow: 0 26px 72px rgba(48, 46, 82, 0.14);
-      }
-
-      .work-ip-video video {
-        display: block;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
       }
 
       .work-scroll-hint {
@@ -2522,12 +2566,6 @@
           font-size: 14px;
         }
 
-        .work-ip-video {
-          width: 132px;
-          height: 168px;
-          border-radius: 26px;
-        }
-
         .work-scroll-hint {
           display: none;
         }
@@ -2620,14 +2658,23 @@
         min-height: clamp(470px, 70vh, 560px);
         margin-bottom: clamp(34px, 6vh, 62px);
         padding: clamp(32px, 4.6vw, 58px);
-        opacity: 1;
+        opacity: 1 !important;
         cursor: default;
+        background:
+          radial-gradient(circle at 86% 78%, rgba(124, 112, 216, 0.1), transparent 44%),
+          linear-gradient(145deg, #ffffff 0%, #fbfbff 58%, #f7f8fc 100%);
+        will-change: transform;
         transform: none;
         transition:
           transform 360ms cubic-bezier(0.22, 1, 0.36, 1),
           border-color 260ms ease,
           box-shadow 260ms ease,
           background 260ms ease;
+      }
+
+      .work .project-card.is-inview,
+      .work .project-card:hover {
+        opacity: 1 !important;
       }
 
       .work .project-card:nth-child(1) {
@@ -2938,7 +2985,6 @@
         color: #202438;
         opacity: 0;
         transform: translateX(36px);
-        scroll-snap-align: start;
         backdrop-filter: blur(18px);
         transition:
           opacity 620ms ease,
@@ -3463,6 +3509,7 @@
         display: inline-flex;
         align-items: center;
         gap: 12px;
+        margin-top: clamp(12px, 1.6vh, 20px);
         margin-left: max(22px, calc((100vw - 1180px) / 2));
         color: rgba(32, 36, 56, 0.62);
         font-size: 12px;
@@ -4249,8 +4296,12 @@
 
       /* Beyond Work final coverflow layer */
       .beyond {
-        min-height: clamp(820px, 96vh, 980px);
-        padding-top: clamp(74px, 8vh, 96px);
+        min-height: clamp(760px, 100vh, 940px);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-top: clamp(56px, 6.2vh, 72px);
+        padding-bottom: clamp(56px, 6.2vh, 72px);
         overflow: hidden;
         transition: background 1000ms ease;
       }
@@ -4265,7 +4316,8 @@
 
       .beyond-header {
         width: min(1180px, calc(100vw - 96px));
-        margin-bottom: clamp(24px, 3.2vh, 38px);
+        flex: 0 0 auto;
+        margin-bottom: clamp(14px, 1.8vh, 22px);
       }
 
       .beyond-title-row {
@@ -4274,14 +4326,14 @@
       }
 
       .beyond-title {
-        font-size: clamp(54px, 6.2vw, 84px);
+        font-size: clamp(44px, 4.9vw, 68px);
         letter-spacing: 0;
         line-height: 0.95;
       }
 
       .beyond-en {
         display: inline-block;
-        margin-top: 14px;
+        margin-top: 10px;
         font-size: 16px;
         line-height: 1;
         color: rgba(35, 38, 58, 0.46);
@@ -4291,8 +4343,8 @@
 
       .beyond-method-note {
         width: min(330px, 30vw);
-        margin-top: 6px;
-        padding: 18px 20px;
+        margin-top: 2px;
+        padding: 15px 18px;
         border: 1px solid rgba(255, 255, 255, 0.76);
         border-radius: 18px;
         background: rgba(255, 255, 255, 0.55);
@@ -4313,7 +4365,8 @@
 
       .beyond-track-wrap {
         width: 100%;
-        height: clamp(540px, 61vh, 680px);
+        flex: 0 1 auto;
+        height: clamp(500px, 56vh, 620px);
         margin-inline: auto;
         border: 0;
         background: transparent;
@@ -4323,11 +4376,13 @@
 
       .beyond-track {
         height: 100%;
-        gap: clamp(30px, 4vw, 56px);
-        padding: 18px calc((100vw - min(980px, 72vw)) / 2) 34px;
+        gap: clamp(24px, 3.4vw, 46px);
+        align-items: center;
+        box-sizing: border-box;
+        padding: 0 calc((100vw - min(900px, 66vw)) / 2);
         overflow-x: auto;
         overflow-y: visible;
-        scroll-padding-inline: calc((100vw - min(980px, 72vw)) / 2);
+        scroll-padding-inline: calc((100vw - min(900px, 66vw)) / 2);
         scroll-snap-type: x proximity;
       }
 
@@ -4336,9 +4391,9 @@
         position: relative;
         inset: auto;
         display: block;
-        flex: 0 0 clamp(760px, 72vw, 980px);
-        width: clamp(760px, 72vw, 980px);
-        height: clamp(510px, 58vh, 650px);
+        flex: 0 0 clamp(700px, 66vw, 900px);
+        width: clamp(700px, 66vw, 900px);
+        height: clamp(470px, 52vh, 570px);
         min-height: 0;
         padding: clamp(34px, 4vw, 50px);
         border: 1px solid rgba(40, 44, 60, 0.06);
@@ -4681,7 +4736,8 @@
 
       .beyond-controls {
         width: min(760px, calc(100vw - 80px));
-        margin-top: 10px;
+        flex: 0 0 auto;
+        margin-top: clamp(8px, 1.4vh, 16px);
         justify-content: center;
         gap: 20px;
       }
@@ -4736,9 +4792,9 @@
 
       .beyond .scene-card,
       .beyond .scene-card.photography {
-        height: clamp(520px, 59vh, 650px);
-        padding: clamp(46px, 5vw, 68px);
-        border-radius: 34px;
+        height: clamp(470px, 52vh, 570px);
+        padding: clamp(38px, 4.3vw, 56px);
+        border-radius: 30px;
       }
 
       .beyond .scene-content,
@@ -4747,33 +4803,33 @@
       .beyond .scene-card.training .scene-content,
       .beyond .scene-card.photography .scene-content {
         left: clamp(52px, 6vw, 78px);
-        top: clamp(48px, 5.8vw, 70px);
+        top: clamp(40px, 4.8vw, 58px);
         right: auto;
         max-width: min(45%, 440px);
       }
 
       .beyond .scene-card h3 {
         max-width: 460px;
-        font-size: clamp(42px, 4.8vw, 68px);
+        font-size: clamp(36px, 4.1vw, 56px);
         line-height: 1.02;
       }
 
       .beyond .scene-card .scene-claim {
         max-width: 440px;
-        margin-top: 24px;
-        font-size: clamp(16px, 1.45vw, 20px);
+        margin-top: 18px;
+        font-size: clamp(15px, 1.32vw, 18px);
         line-height: 1.55;
       }
 
       .beyond .scene-card .scene-copy {
         max-width: 520px;
-        margin-top: 18px;
+        margin-top: 12px;
         font-size: clamp(14px, 1.2vw, 16px);
         line-height: 1.75;
       }
 
       .beyond .scene-tags {
-        margin-top: 28px;
+        margin-top: 20px;
         gap: 10px;
         max-width: 430px;
         opacity: 1;
@@ -4804,9 +4860,9 @@
         left: clamp(58px, 6.3vw, 86px);
         right: auto;
         top: auto;
-        bottom: clamp(48px, 5.8vw, 70px);
-        width: min(36vw, 360px);
-        height: clamp(132px, 16vh, 178px);
+        bottom: clamp(38px, 4.6vw, 56px);
+        width: min(32vw, 320px);
+        height: clamp(118px, 13.8vh, 154px);
         transform: none;
       }
 
@@ -4845,10 +4901,10 @@
       .beyond .scene-card.training .scene-visual,
       .beyond .scene-card.photography .scene-visual {
         left: auto;
-        right: clamp(48px, 6vw, 80px);
-        bottom: clamp(36px, 4vw, 58px);
-        width: min(39%, 390px);
-        height: min(72%, 470px);
+        right: clamp(40px, 5vw, 66px);
+        bottom: clamp(30px, 3.6vw, 48px);
+        width: min(36%, 350px);
+        height: min(70%, 410px);
       }
 
       .beyond .scene-card.photography.is-active .scene-video,
@@ -4976,6 +5032,10 @@
       }
 
       @media (max-width: 860px) {
+        .hero {
+          background: #ececf6;
+        }
+
         .nav {
           height: 66px;
           padding: 18px 20px;
@@ -4995,17 +5055,38 @@
           font-size: 12px;
         }
 
-        .hero-title {
-          top: 118px;
-          font-size: clamp(60px, 18vw, 112px);
-          white-space: normal;
+        .brand-mark {
+          width: 20px;
+          height: 20px;
+          margin-right: 10px;
+          font-size: 12px;
+        }
+
+        .contact {
+          min-width: 78px;
+          padding: 0 16px;
+        }
+
+        .hero-copy-block {
+          left: 22px;
+          top: clamp(124px, 21vh, 178px);
+          width: min(82vw, 460px);
         }
 
         .hero-kicker {
-          top: 84px;
-          left: 22px;
-          max-width: 70vw;
           font-size: 10px;
+          letter-spacing: 0.12em;
+        }
+
+        .hero-kicker::before {
+          width: 26px;
+        }
+
+        .hero-title {
+          margin-top: 22px;
+          font-size: clamp(36px, 9.6vw, 56px);
+          line-height: 1.2;
+          white-space: normal;
         }
 
         .character-wrap {
@@ -5014,15 +5095,19 @@
         }
 
         .role {
-          left: 22px;
-          top: auto;
-          bottom: 18vh;
-          max-width: 48vw;
-          font-size: 12px;
+          max-width: 76vw;
+          margin-top: clamp(38px, 7vh, 58px);
+          font-size: clamp(16px, 4.8vw, 22px);
           line-height: 1.4;
         }
 
-        .hero-copy,
+        .hero-copy {
+          display: block;
+          max-width: 82vw;
+          margin-top: 10px;
+          font-size: clamp(15px, 4vw, 19px);
+        }
+
         .hero-status,
         .scroll-cue {
           display: none;
@@ -5684,11 +5769,594 @@
         }
       }
 
+      /* Mobile final layout pass: lighter motion, tap-friendly cards, no horizontal page overflow. */
+      @media (max-width: 860px) {
+        html {
+          scroll-snap-type: none;
+        }
+
+        body {
+          background: #f8f8fb;
+        }
+
+        .hero {
+          min-height: 100svh;
+          touch-action: pan-y;
+        }
+
+        .hero-reveal img {
+          object-position: 72% center;
+        }
+
+        .hero-reveal-after {
+          transition: opacity 120ms ease;
+        }
+
+        .hero-copy-block {
+          left: 22px;
+          top: clamp(112px, 18svh, 156px);
+          width: min(78vw, 440px);
+        }
+
+        .hero-title {
+          margin-top: 18px;
+          font-size: clamp(34px, 10.2vw, 52px);
+          line-height: 1.16;
+        }
+
+        .role {
+          margin-top: clamp(28px, 5.5svh, 46px);
+        }
+
+        .about,
+        .journey,
+        .ability,
+        .work,
+        .beyond,
+        .contact-section {
+          min-height: auto;
+          scroll-snap-align: none;
+        }
+
+        .about,
+        .journey,
+        .ability {
+          padding-top: 78px;
+          padding-bottom: 68px;
+        }
+
+        .about-actions {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 10px;
+        }
+
+        .about-action {
+          min-height: 42px;
+        }
+
+        .about-stats {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          overflow: hidden;
+        }
+
+        .about-stat strong {
+          font-size: clamp(28px, 10vw, 42px);
+        }
+
+        .profile-card p,
+        .ability-keywords {
+          transition: max-height 260ms ease, opacity 220ms ease, transform 260ms ease;
+        }
+
+        .profile-card.is-active p,
+        .profile-card:focus-visible p,
+        .profile-card:hover p {
+          max-height: 120px;
+        }
+
+        .career-card {
+          width: min(100%, 380px);
+        }
+
+        .career-card .desc {
+          max-height: none;
+          opacity: 1;
+          transform: none;
+        }
+
+        .career-card:hover {
+          transform: none;
+        }
+
+        .work {
+          padding-top: 78px;
+          padding-bottom: 72px;
+        }
+
+        .work-hero {
+          width: calc(100vw - 40px);
+          margin-bottom: 30px;
+        }
+
+        .work-hero-title {
+          font-size: clamp(48px, 15vw, 68px);
+          letter-spacing: -0.04em;
+        }
+
+        .work .project-list {
+          width: calc(100vw - 40px);
+          padding-bottom: 0;
+        }
+
+        .work .project-card,
+        .work .project-card.is-reversed {
+          position: relative;
+          top: auto;
+          grid-template-columns: 1fr;
+          gap: 22px;
+          min-height: auto;
+          margin-bottom: 22px;
+          padding: 22px;
+          border-radius: 22px;
+        }
+
+        .work .project-card:hover {
+          transform: none;
+        }
+
+        .work .project-card .project-info,
+        .work .project-card.is-reversed .project-info {
+          order: 2;
+        }
+
+        .work .project-card .project-visual,
+        .work .project-card.is-reversed .project-visual {
+          order: 1;
+          min-height: 230px;
+        }
+
+        .project-title {
+          font-size: clamp(26px, 8vw, 36px);
+        }
+
+        .beyond {
+          display: block;
+          min-height: auto;
+          padding: 78px 0 70px;
+        }
+
+        .beyond-header {
+          width: calc(100vw - 40px);
+          margin-bottom: 22px;
+        }
+
+        .beyond-title {
+          font-size: clamp(38px, 11.8vw, 54px);
+        }
+
+        .beyond-subtitle {
+          line-height: 1.7;
+        }
+
+        .beyond-track-wrap {
+          width: 100%;
+          height: auto;
+          overflow: visible;
+        }
+
+        .beyond-track {
+          display: flex;
+          gap: 16px;
+          height: auto;
+          overflow-x: auto;
+          overflow-y: visible;
+          padding: 4px 20px 24px;
+          scroll-padding-inline: 20px;
+          scroll-snap-type: x proximity;
+          -webkit-overflow-scrolling: touch;
+        }
+
+        .beyond .scene-card,
+        .beyond .scene-card.photography,
+        .scene-card,
+        .scene-card.photography {
+          position: relative;
+          inset: auto;
+          flex: 0 0 min(86vw, 390px);
+          width: auto;
+          height: 540px;
+          min-height: 0;
+          margin: 0;
+          padding: 24px;
+          border-radius: 24px;
+          opacity: 0.72;
+          pointer-events: auto;
+          transform: scale(0.96) !important;
+          scroll-snap-align: center;
+        }
+
+        .beyond .scene-card.is-active,
+        .scene-card.is-active,
+        .beyond.is-visible .scene-card.is-active {
+          opacity: 1;
+          transform: scale(1) !important;
+        }
+
+        .beyond .scene-content,
+        .beyond .scene-card.content .scene-content,
+        .beyond .scene-card.pilates .scene-content,
+        .beyond .scene-card.training .scene-content,
+        .beyond .scene-card.photography .scene-content {
+          position: absolute;
+          left: 24px;
+          right: 24px;
+          top: 24px;
+          width: auto;
+          max-width: none;
+        }
+
+        .beyond .scene-card h3 {
+          font-size: clamp(28px, 8.5vw, 38px);
+          white-space: normal;
+        }
+
+        .beyond .scene-card .scene-claim,
+        .beyond .scene-card .scene-copy {
+          max-width: none;
+        }
+
+        .beyond .scene-assets,
+        .beyond .asset-content,
+        .beyond .asset-pilates,
+        .beyond .asset-training,
+        .beyond .asset-photo,
+        .beyond .scene-card.content .asset-content,
+        .beyond .scene-card.pilates .asset-pilates,
+        .beyond .scene-card.training .asset-training,
+        .beyond .scene-card.photography .asset-photo {
+          position: absolute;
+          left: 24px;
+          right: auto;
+          top: auto;
+          bottom: 112px;
+          width: 190px;
+          height: 130px;
+          transform: scale(0.82);
+          transform-origin: left bottom;
+        }
+
+        .beyond .scene-visual,
+        .beyond .scene-card.content .scene-visual,
+        .beyond .scene-card.pilates .scene-visual,
+        .beyond .scene-card.training .scene-visual,
+        .beyond .scene-card.photography .scene-visual {
+          position: absolute;
+          right: 4px;
+          bottom: 0;
+          width: 72%;
+          height: 42%;
+          min-height: 0;
+        }
+
+        .beyond-controls {
+          width: calc(100vw - 40px);
+          margin-top: 4px;
+        }
+      }
+
+      @media (max-width: 620px) {
+        .nav {
+          height: 62px;
+          padding: 16px 18px;
+        }
+
+        .contact {
+          height: 28px;
+          min-width: 76px;
+          padding: 0 14px;
+          font-size: 11px;
+        }
+
+        .hero-copy-block {
+          width: min(82vw, 350px);
+        }
+
+        .hero-title {
+          font-size: clamp(32px, 10.5vw, 46px);
+        }
+
+        .hero-reveal img {
+          object-position: 76% center;
+        }
+
+        .about-stats {
+          grid-template-columns: 1fr;
+          gap: 12px;
+        }
+
+        .about-stat,
+        .about-stat + .about-stat {
+          padding: 0 0 12px;
+          border-left: 0;
+          border-bottom: 1px solid rgba(32, 36, 56, 0.1);
+        }
+
+        .about-visual {
+          grid-template-columns: 1fr;
+        }
+
+        .profile-card.core {
+          grid-column: auto;
+        }
+
+        .ability-card {
+          min-height: 0;
+          padding: 20px;
+          border-radius: 22px;
+        }
+
+        .ability-card h3 {
+          font-size: 24px;
+        }
+
+        .work .project-card,
+        .work .project-card.is-reversed {
+          padding: 20px;
+        }
+
+        .work .project-card .project-visual,
+        .work .project-card.is-reversed .project-visual {
+          min-height: 210px;
+        }
+
+        .beyond .scene-card,
+        .beyond .scene-card.photography,
+        .scene-card,
+        .scene-card.photography {
+          flex-basis: 88vw;
+          height: 520px;
+          padding: 22px;
+        }
+      }
+
+      /* Adaptive layout pass: fluid gutters and intermediate tablet layouts. */
+      :root {
+        --page-gutter: clamp(20px, 5vw, 86px);
+        --section-pad-y: clamp(72px, 8vw, 118px);
+        --card-radius-fluid: clamp(22px, 2.3vw, 34px);
+      }
+
+      img,
+      video {
+        max-width: 100%;
+      }
+
+      @media (min-width: 861px) and (max-width: 1180px) {
+        .nav {
+          padding-inline: var(--page-gutter);
+          gap: clamp(16px, 2vw, 26px);
+        }
+
+        .nav-links {
+          gap: clamp(14px, 1.6vw, 22px);
+        }
+
+        .contact {
+          padding-inline: clamp(18px, 2.2vw, 26px);
+        }
+
+        .hero-copy-block {
+          left: var(--page-gutter);
+          width: min(58vw, 620px);
+        }
+
+        .hero-title {
+          font-size: clamp(48px, 6.4vw, 72px);
+        }
+
+        .about,
+        .journey,
+        .ability {
+          padding-inline: var(--page-gutter);
+        }
+
+        .about-inner {
+          grid-template-columns: minmax(340px, 0.88fr) minmax(420px, 1.12fr);
+          gap: clamp(36px, 5vw, 68px);
+        }
+
+        .about-title {
+          font-size: clamp(48px, 6.3vw, 72px);
+        }
+
+        .profile-photo-wrap {
+          width: min(42vw, 470px);
+        }
+
+        .profile-card {
+          width: clamp(150px, 17vw, 210px);
+        }
+
+        .journey-inner {
+          grid-template-columns: minmax(0, 1fr);
+          gap: 34px;
+        }
+
+        .journey-visual {
+          display: none;
+        }
+
+        .ability {
+          min-height: auto;
+        }
+
+        .ability-stage {
+          min-height: clamp(640px, 70vw, 700px);
+        }
+
+        .ability-card {
+          width: clamp(250px, 27vw, 305px);
+        }
+
+        .ability-card.design {
+          width: clamp(280px, 30vw, 330px);
+        }
+
+        .ability-card.product {
+          left: 4%;
+        }
+
+        .ability-card.growth {
+          right: 4%;
+        }
+
+        .ability-character {
+          width: min(30vw, 340px);
+          min-width: 260px;
+        }
+
+        .work-hero,
+        .work .project-list {
+          width: min(1080px, calc(100vw - var(--page-gutter) * 2));
+        }
+
+        .work .project-card,
+        .work .project-card.is-reversed {
+          grid-template-columns: minmax(260px, 0.9fr) minmax(360px, 1.1fr);
+          gap: clamp(24px, 3.8vw, 48px);
+          min-height: clamp(430px, 56vw, 520px);
+        }
+
+        .beyond-header {
+          width: min(1080px, calc(100vw - var(--page-gutter) * 2));
+        }
+
+        .beyond .scene-card,
+        .beyond .scene-card.photography {
+          flex-basis: clamp(680px, 74vw, 860px);
+          width: clamp(680px, 74vw, 860px);
+        }
+
+        .beyond-track {
+          padding-inline: calc((100vw - min(860px, 74vw)) / 2);
+          scroll-padding-inline: calc((100vw - min(860px, 74vw)) / 2);
+        }
+      }
+
+      @media (max-width: 860px) {
+        :root {
+          --page-gutter: clamp(18px, 5.2vw, 28px);
+          --section-pad-y: clamp(68px, 10vw, 88px);
+        }
+
+        .about,
+        .journey,
+        .ability,
+        .work,
+        .beyond {
+          padding-top: var(--section-pad-y);
+          padding-bottom: var(--section-pad-y);
+        }
+
+        .about-inner,
+        .journey-inner,
+        .ability-inner,
+        .work-hero,
+        .work .project-list,
+        .beyond-header,
+        .contact-inner {
+          width: calc(100vw - var(--page-gutter) * 2);
+        }
+
+        .about-visual {
+          grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr));
+        }
+
+        .profile-photo-wrap {
+          grid-column: 1 / -1;
+          width: min(78vw, 390px);
+        }
+
+        .journey-title,
+        .ability-title,
+        .work-hero-title,
+        .beyond-title {
+          overflow-wrap: anywhere;
+        }
+
+        .career-path {
+          grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+        }
+
+        .career-card {
+          width: 100%;
+          max-width: 390px;
+        }
+
+        .work .project-card,
+        .work .project-card.is-reversed {
+          width: 100%;
+        }
+
+        .project-tags,
+        .scene-tags,
+        .ability-keywords {
+          max-width: 100%;
+        }
+
+        .beyond-track {
+          padding-inline: var(--page-gutter);
+          scroll-padding-inline: var(--page-gutter);
+        }
+
+        .beyond .scene-card,
+        .beyond .scene-card.photography,
+        .scene-card,
+        .scene-card.photography {
+          flex-basis: min(86vw, 420px);
+        }
+      }
+
+      @media (max-width: 420px) {
+        .hero-copy-block {
+          top: clamp(104px, 17svh, 140px);
+          width: calc(100vw - var(--page-gutter) * 2);
+        }
+
+        .hero-title {
+          font-size: clamp(30px, 10vw, 42px);
+        }
+
+        .role,
+        .hero-copy {
+          max-width: 70vw;
+        }
+
+        .about-actions {
+          display: grid;
+          grid-template-columns: 1fr;
+        }
+
+        .about-action {
+          width: 100%;
+        }
+
+        .beyond .scene-card,
+        .beyond .scene-card.photography,
+        .scene-card,
+        .scene-card.photography {
+          flex-basis: calc(100vw - var(--page-gutter) * 2);
+          height: 500px;
+        }
+      }
+
     </style>
   </head>
   <body>
     <nav class="nav" aria-label="主导航">
       <a class="brand" href="#" aria-label="Bai Qingxin 首页">
+        <span class="brand-mark" aria-hidden="true">Q</span>
         <span class="brand-name">QINGXINBAI</span>
       </a>
       <span class="nav-divider" aria-hidden="true"></span>
@@ -5705,13 +6373,19 @@
     </nav>
 
     <main class="hero" aria-label="Bai Qingxin personal homepage hero">
+      <div class="hero-reveal" aria-hidden="true">
+        <img class="hero-reveal-before" src="assets/bai-qingxin/hero-transform-before.png" alt="" />
+        <img class="hero-reveal-after" src="assets/bai-qingxin/hero-transform-after.png" alt="" />
+      </div>
       <section class="hero-stage">
-        <p class="hero-kicker">AI NATIVE PRODUCT DESIGNER / PERSONAL IP</p>
-        <h1 class="hero-title">BAI QINGXIN</h1>
-        <p class="role">AI PRODUCT MANAGER . UI/ UX</p>
-        <p class="hero-copy">
-          将产品判断、体验设计与 AI 工作流连接起来，做可被理解、可被验证、也可被落地的数字体验。
-        </p>
+        <div class="hero-copy-block">
+          <p class="hero-kicker">AI NATIVE PRODUCT DESIGNER</p>
+          <h1 class="hero-title">Turning fuzzy ideas<br />into real products !</h1>
+          <p class="role">AI Native Product Designer</p>
+          <p class="hero-copy">
+            Product Thinking × UX/UI × AI Experience
+          </p>
+        </div>
 
         <div class="hero-status" aria-label="核心能力">
           <div class="status-item">
@@ -5723,19 +6397,6 @@
             <span class="status-number">02</span>
             <span class="status-label">AI Experience</span>
           </div>
-        </div>
-
-        <div class="character-wrap" aria-hidden="true">
-          <video
-            class="character-alpha"
-            src="assets/bai-qingxin/character-u2net.webm"
-            autoplay
-            muted
-            loop
-            playsinline
-            preload="auto"
-          ></video>
-          <video class="character-fallback" src="assets/bai-qingxin/character.mp4" autoplay muted loop playsinline></video>
         </div>
 
         <span class="ground" aria-hidden="true"></span>
@@ -5869,11 +6530,11 @@
               <div class="card-panel">
                 <span class="card-number">02</span>
                 <h4>产品体验设计</h4>
-                <p class="org">百度文库</p>
+                <p class="org">百度文库·UI设计</p>
                 <p class="desc">进入成熟互联网产品体系，在真实业务中理解用户体验、产品协作与设计规范。</p>
                 <div class="meta">
                   <span>UX/UI · 产品协作</span>
-                  <span>[可替换时间]</span>
+                  <span>2024 — 2025</span>
                 </div>
               </div>
             </article>
@@ -5887,7 +6548,7 @@
                 <p class="desc">进入高不确定性的创新业务，从 0→1 探索 AI 产品、快速验证想法并推动方案落地。</p>
                 <div class="meta">
                   <span>AI Native · 0→1 验证</span>
-                  <span>[可替换时间]</span>
+                  <span>2026 — 2026</span>
                 </div>
               </div>
             </article>
@@ -5930,9 +6591,9 @@
 
         <div class="ability-stage" aria-label="复合能力交互模型">
           <svg class="ability-connectors" viewBox="0 0 720 620" preserveAspectRatio="none" aria-hidden="true">
-            <path d="M176 230 C 244 276, 298 320, 346 404" />
-            <path d="M360 178 C 360 254, 360 326, 360 402" />
-            <path d="M544 230 C 476 276, 422 320, 374 404" />
+            <path d="M166 198 C 244 252, 302 322, 348 426" />
+            <path d="M360 146 C 360 246, 360 334, 360 426" />
+            <path d="M554 198 C 476 252, 418 322, 372 426" />
           </svg>
 
           <figure class="ability-character" aria-label="白清新人物 IP 动态形象">
@@ -5996,14 +6657,6 @@
           <p class="work-hero-description">以下项目覆盖 AI 原生产品、0-1 创新项目、内容平台体验、复杂业务设计与增长转化场景。</p>
           <div class="work-hero-note">4 个精选案例，展示从判断到落地的完整设计能力</div>
           <div class="work-scroll-hint">Scroll to stack cases</div>
-        </div>
-        <div class="work-hero-media">
-          <div class="work-ip-video" aria-label="小白 IP 动态形象">
-            <video autoplay muted loop playsinline>
-              <source src="assets/ip/xiaobai-selected-projects-u2net.webm" type="video/webm" />
-              <source src="assets/ip/xiaobai-selected-projects.mp4" type="video/mp4" />
-            </video>
-          </div>
         </div>
       </section>
 
@@ -6268,9 +6921,61 @@
     </section>
 
     <script>
-      document.querySelector(".character-alpha")?.addEventListener("error", () => {
-        document.querySelector(".character-fallback").style.opacity = "0.72";
-      });
+      const hero = document.querySelector(".hero");
+      const updateHeroReveal = (event) => {
+        if (!hero) {
+          return;
+        }
+
+        const rect = hero.getBoundingClientRect();
+        const x = ((event.clientX - rect.left) / rect.width) * 100;
+        const y = ((event.clientY - rect.top) / rect.height) * 100;
+        hero.style.setProperty("--reveal-x", `${x.toFixed(2)}%`);
+        hero.style.setProperty("--reveal-y", `${y.toFixed(2)}%`);
+      };
+
+      if (hero) {
+        hero.addEventListener("pointerenter", (event) => {
+          if (event.pointerType === "touch") {
+            return;
+          }
+          updateHeroReveal(event);
+          hero.style.setProperty("--reveal-size", "180px");
+          hero.classList.add("is-revealing");
+        });
+
+        hero.addEventListener("pointermove", updateHeroReveal);
+
+        hero.addEventListener("pointerdown", (event) => {
+          if (event.pointerType !== "touch") {
+            return;
+          }
+          updateHeroReveal(event);
+          hero.style.setProperty("--reveal-size", "128px");
+          hero.classList.add("is-revealing");
+        });
+
+        hero.addEventListener("pointerup", (event) => {
+          if (event.pointerType !== "touch") {
+            return;
+          }
+          hero.style.setProperty("--reveal-size", "0px");
+          hero.classList.remove("is-revealing");
+        });
+
+        hero.addEventListener("pointercancel", (event) => {
+          if (event.pointerType !== "touch") {
+            return;
+          }
+          hero.style.setProperty("--reveal-size", "0px");
+          hero.classList.remove("is-revealing");
+        });
+
+        hero.addEventListener("pointerleave", () => {
+          hero.style.setProperty("--reveal-size", "0px");
+          hero.classList.remove("is-revealing");
+        });
+      }
 
       const aboutSection = document.querySelector(".about");
       const aboutVisual = document.querySelector(".about-visual");
@@ -6850,6 +7555,7 @@
       let beyondDragStartX = 0;
       let beyondDragScrollLeft = 0;
       let beyondDragging = false;
+      let beyondWheelLocked = false;
 
       const getSceneFrameSrc = (sequence, index) => {
         const folder = sequence.dataset.frameDir;
@@ -7061,10 +7767,8 @@
       });
 
       if (beyondTrack) {
-        beyondTrack.addEventListener("mouseenter", () => pauseBeyondAutoplay(false));
         beyondTrack.addEventListener("mouseleave", () => {
           resetSceneParallax(beyondScenes[activeBeyondIndex]?.card);
-          pauseBeyondAutoplay(true);
         });
 
         beyondTrack.addEventListener("pointerdown", (event) => {
@@ -7125,7 +7829,15 @@
             if (Math.abs(event.deltaX) <= Math.abs(event.deltaY) || Math.abs(event.deltaX) < 18) {
               return;
             }
-            pauseBeyondAutoplay(true);
+            if (beyondWheelLocked) {
+              return;
+            }
+
+            beyondWheelLocked = true;
+            setActiveBeyondScene(activeBeyondIndex + (event.deltaX > 0 ? 1 : -1));
+            window.setTimeout(() => {
+              beyondWheelLocked = false;
+            }, 680);
           },
           { passive: true }
         );
