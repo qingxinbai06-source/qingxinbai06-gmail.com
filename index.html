@@ -11,6 +11,19 @@
         --lime: #d9ff43;
         --purple: #7a55ff;
         --ink: #0b0b10;
+        --page-max: 1440px;
+        --page-gutter: clamp(20px, 5vw, 80px);
+        --section-y: clamp(104px, 10vw, 168px);
+        --section-y-lg: clamp(128px, 12vw, 196px);
+        --radius-xs: 8px;
+        --radius-sm: 12px;
+        --radius-md: 16px;
+        --radius-lg: 24px;
+        --radius-pill: 999px;
+        --border-subtle: 1px solid rgba(24, 29, 43, 0.07);
+        --border-medium: 1px solid rgba(24, 29, 43, 0.11);
+        --shadow-sm: 0 8px 24px rgba(27, 33, 52, 0.045);
+        --shadow-lg: 0 24px 64px rgba(27, 33, 52, 0.075);
       }
 
       * {
@@ -8600,6 +8613,19 @@
 
       /* Visual system unification pass: keeps each section layout, but aligns tone, cards, labels, and controls. */
       :root {
+        --page-max: 1440px;
+        --page-gutter: clamp(20px, 5vw, 80px);
+        --section-y: clamp(104px, 10vw, 168px);
+        --section-y-lg: clamp(128px, 12vw, 196px);
+        --radius-xs: 8px;
+        --radius-sm: 12px;
+        --radius-md: 16px;
+        --radius-lg: 24px;
+        --radius-pill: 999px;
+        --border-subtle: 1px solid rgba(24, 29, 43, 0.07);
+        --border-medium: 1px solid rgba(24, 29, 43, 0.11);
+        --shadow-sm: 0 8px 24px rgba(27, 33, 52, 0.045);
+        --shadow-lg: 0 24px 64px rgba(27, 33, 52, 0.075);
         --surface-base: #f8f8fb;
         --surface-soft: #fbfbfd;
         --ink-deep: #202438;
@@ -8613,11 +8639,16 @@
         --glass-bg-strong: rgba(255, 255, 255, 0.84);
         --glass-border: rgba(255, 255, 255, 0.76);
         --line-soft: rgba(32, 36, 56, 0.08);
-        --shadow-soft: 0 18px 48px rgba(70, 75, 120, 0.08);
-        --shadow-lift: 0 30px 78px rgba(70, 75, 120, 0.14);
-        --radius-card: 26px;
-        --radius-inner: 18px;
+        --shadow-soft: var(--shadow-sm);
+        --shadow-lift: var(--shadow-lg);
+        --radius-card: var(--radius-lg);
+        --radius-inner: var(--radius-md);
         --ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      .page-container {
+        width: min(calc(100% - var(--page-gutter) * 2), var(--page-max));
+        margin-inline: auto;
       }
 
       body {
@@ -8625,6 +8656,10 @@
         color: var(--ink-deep);
         text-rendering: geometricPrecision;
         -webkit-font-smoothing: antialiased;
+      }
+
+      html {
+        scroll-padding-top: 72px;
       }
 
       .about,
@@ -8635,6 +8670,50 @@
       .beyond,
       .contact-section {
         color: var(--ink-deep);
+      }
+
+      .about,
+      .journey,
+      .ability,
+      .beyond,
+      .contact-section {
+        padding-block: var(--section-y);
+      }
+
+      .hero,
+      .work {
+        padding-block: 0;
+      }
+
+      .work-hero {
+        padding-block: var(--section-y-lg);
+      }
+
+      .hero-stage,
+      .about-inner,
+      .journey-inner,
+      .ability-inner,
+      .work-hero-copy,
+      .project-list,
+      .more-work,
+      .beyond-header,
+      .beyond-track-wrap,
+      .beyond-controls,
+      .beyond-next,
+      .contact-inner,
+      .project-detail-panel {
+        width: min(calc(100% - var(--page-gutter) * 2), var(--page-max));
+        margin-inline: auto;
+      }
+
+      .work-hero-copy,
+      .about-copy,
+      .journey-copy,
+      .ability-copy,
+      .more-work-header,
+      .beyond-header,
+      .contact-copy {
+        text-align: left;
       }
 
       .about,
@@ -8658,9 +8737,9 @@
       .ability-index,
       .project-index {
         color: var(--ink-faint);
-        font-size: 12px;
-        font-weight: 820;
-        letter-spacing: 0.145em;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.14em;
         line-height: 1.1;
         text-transform: uppercase;
       }
@@ -8674,7 +8753,18 @@
       .contact-title,
       .project-detail-title {
         color: var(--ink-title);
-        letter-spacing: 0;
+        font-weight: 700;
+        letter-spacing: -0.045em;
+        line-height: 1.04;
+      }
+
+      .about-title,
+      .journey-title,
+      .ability-title,
+      .work-hero-title,
+      .more-work-title,
+      .beyond-title {
+        font-size: clamp(44px, 4.7vw, 72px);
       }
 
       .about-text,
@@ -8687,6 +8777,9 @@
       .project-detail-text,
       .scene-copy {
         color: var(--ink-muted);
+        font-size: clamp(16px, 1.25vw, 18px);
+        font-weight: 400;
+        line-height: 1.72;
       }
 
       .about-role,
@@ -8710,6 +8803,7 @@
       .contact-status,
       .contact-bubble {
         border-color: var(--glass-border);
+        border: var(--border-subtle);
         background:
           radial-gradient(circle at 82% 12%, color-mix(in srgb, var(--card-accent, var(--scene-accent, var(--brand-violet))) 8%, transparent), transparent 38%),
           linear-gradient(145deg, var(--glass-bg-strong), var(--glass-bg));
@@ -8731,9 +8825,10 @@
       .assistant-question,
       .assistant-action {
         border-color: rgba(32, 36, 56, 0.09);
+        border: var(--border-subtle);
         background: rgba(255, 255, 255, 0.66);
         color: rgba(32, 36, 56, 0.68);
-        box-shadow: 0 10px 26px rgba(70, 75, 120, 0.055);
+        box-shadow: var(--shadow-sm);
         backdrop-filter: blur(14px);
       }
 
@@ -8775,8 +8870,8 @@
       .scene-tags span,
       .ability-keywords span,
       .more-filter {
-        border-radius: 999px;
-        font-weight: 760;
+        border-radius: var(--radius-pill);
+        font-weight: 600;
       }
 
       .about-action,
@@ -8784,7 +8879,7 @@
       .contact,
       .contact-cta,
       .assistant-send {
-        border-radius: 14px;
+        border-radius: var(--radius-sm);
       }
 
       .about-action.primary,
@@ -8816,14 +8911,59 @@
       }
 
       .nav {
-        background: rgba(248, 248, 251, 0.22);
-        border-bottom-color: rgba(255, 255, 255, 0.14);
-        backdrop-filter: blur(18px) saturate(1.08);
+        position: fixed;
+        height: 72px;
+        padding: 0 var(--page-gutter);
+        background: transparent;
+        border-bottom: 1px solid transparent;
+        backdrop-filter: blur(0);
+        -webkit-backdrop-filter: blur(0);
+        transition:
+          background 0.35s ease,
+          border-color 0.35s ease,
+          backdrop-filter 0.35s ease,
+          -webkit-backdrop-filter 0.35s ease;
+      }
+
+      .nav.is-scrolled {
+        background: rgba(248, 249, 252, 0.78);
+        border-bottom-color: rgba(20, 25, 40, 0.055);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
       }
 
       .brand,
       .nav-links a {
         color: rgba(24, 27, 42, 0.82);
+      }
+
+      .nav-links a {
+        position: relative;
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+      }
+
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -9px;
+        height: 1px;
+        background: #171b28;
+        transform: scaleX(0);
+        transform-origin: center;
+        transition: transform 260ms var(--ease-premium);
+      }
+
+      .nav-links a.is-active {
+        color: #171b28;
+      }
+
+      .nav-links a.is-active::after,
+      .nav-links a:hover::after {
+        transform: scaleX(1);
       }
 
       .brand-mark {
@@ -9609,7 +9749,45 @@
       </section>
     </aside>
 
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
     <script>
+      const nav = document.querySelector(".nav");
+      const navLinks = Array.from(document.querySelectorAll(".nav-links a[href^='#']"));
+      const setNavScrolled = () => {
+        nav?.classList.toggle("is-scrolled", window.scrollY > 48);
+      };
+      const setActiveNavLink = (id) => {
+        navLinks.forEach((link) => {
+          link.classList.toggle("is-active", link.getAttribute("href") === `#${id}`);
+        });
+      };
+
+      setNavScrolled();
+      window.addEventListener("scroll", setNavScrolled, { passive: true });
+
+      const navSpySections = navLinks
+        .map((link) => document.querySelector(link.getAttribute("href")))
+        .filter(Boolean);
+
+      if (navSpySections.length) {
+        const navSpy = new IntersectionObserver(
+          (entries) => {
+            const visible = entries
+              .filter((entry) => entry.isIntersecting)
+              .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+            if (visible?.target?.id) {
+              setActiveNavLink(visible.target.id);
+            }
+          },
+          {
+            rootMargin: "-34% 0px -48% 0px",
+            threshold: [0.08, 0.18, 0.32, 0.48],
+          }
+        );
+        navSpySections.forEach((section) => navSpy.observe(section));
+      }
+
       const hero = document.querySelector(".hero");
       const updateHeroReveal = (event) => {
         if (!hero) {
@@ -11510,6 +11688,164 @@
         );
         beyondObserver.observe(beyondSection);
       }
+
+      const initPremiumMotion = () => {
+        if (reduceMotion || !window.gsap || !window.ScrollTrigger) {
+          return;
+        }
+
+        const gsap = window.gsap;
+        const ScrollTrigger = window.ScrollTrigger;
+        gsap.registerPlugin(ScrollTrigger);
+
+        const easeOut = "power3.out";
+        const signatureEase = "expo.out";
+        const revealEase = "power4.out";
+
+        gsap.set(".nav", { y: -28, autoAlpha: 0 });
+        gsap.set([".hero-kicker", ".hero-title", ".hero-copy", ".hero-status", ".scroll-cue"], {
+          y: 42,
+          autoAlpha: 0,
+        });
+        gsap.set(".hero-title", {
+          clipPath: "inset(0 0 100% 0)",
+          scaleY: 0.88,
+          transformOrigin: "50% 100%",
+        });
+        gsap.set(".hero-reveal img", { scale: 1.06, filter: "blur(8px)" });
+
+        const heroTl = gsap.timeline({ defaults: { ease: revealEase } });
+        heroTl
+          .to(".hero-reveal img", { scale: 1, filter: "blur(0px)", duration: 1.45 })
+          .to(".nav", { y: 0, autoAlpha: 1, duration: 0.68 }, 0.12)
+          .to(".hero-kicker", { y: 0, autoAlpha: 1, duration: 0.62 }, 0.34)
+          .to(".hero-title", { y: 0, autoAlpha: 1, clipPath: "inset(0 0 0% 0)", scaleY: 1, duration: 1.08, ease: signatureEase }, 0.46)
+          .to(".hero-copy", { y: 0, autoAlpha: 1, duration: 0.7 }, 0.88)
+          .to(".hero-status", { y: 0, autoAlpha: 1, duration: 0.72 }, 1.02)
+          .to(".scroll-cue", { y: 0, autoAlpha: 1, duration: 0.58 }, 1.2);
+
+        const sectionConfigs = [
+          {
+            section: ".about",
+            title: ".about-title",
+            pre: ".about-label, .about-kicker, .about-badge",
+            items: ".about-action, .metric, .profile-card, .current-mode",
+            media: ".profile-visual img",
+          },
+          {
+            section: ".journey",
+            title: ".journey-title",
+            pre: ".section-label, .journey-eyebrow, .journey-subtitle",
+            items: ".career-card, .journey-body, .path-summary, .ip-state",
+            media: ".journey-ip",
+          },
+          {
+            section: ".ability",
+            title: ".ability-title",
+            pre: ".ability-eyebrow, .ability-subtitle",
+            items: ".ability-card, .ability-summary, .mood-label",
+            media: ".ability-character img",
+          },
+          {
+            section: ".work",
+            title: ".work-hero-title",
+            pre: ".work-eyebrow, .work-hero-subtitle, .work-hero-description, .work-hero-note",
+            items: ".project-card, .more-work-header, .more-work-filters, .more-work-grid",
+            media: ".project-visual .image-stage",
+          },
+          {
+            section: ".beyond",
+            title: ".beyond-title",
+            pre: ".beyond-label, .beyond-en, .beyond-subtitle, .beyond-method-note",
+            items: ".scene-card, .beyond-controls, .beyond-next",
+            media: ".scene-assets, .scene-visual",
+          },
+          {
+            section: ".contact-section",
+            title: ".contact-title",
+            pre: ".contact-eyebrow, .contact-status, .contact-kicker",
+            items: ".contact-description, .contact-actions, .contact-ai-entry, .contact-footer-bar, .contact-copyright",
+            media: ".contact-visual",
+          },
+        ];
+
+        sectionConfigs.forEach((config) => {
+          const section = document.querySelector(config.section);
+          if (!section) {
+            return;
+          }
+
+          const title = section.querySelector(config.title);
+          const preItems = gsap.utils.toArray(section.querySelectorAll(config.pre));
+          const items = gsap.utils.toArray(section.querySelectorAll(config.items));
+          const media = gsap.utils.toArray(section.querySelectorAll(config.media));
+
+          if (title) {
+            gsap.set(title, {
+              y: 76,
+              autoAlpha: 0,
+              clipPath: "inset(0 0 100% 0)",
+              scaleY: 0.92,
+              transformOrigin: "50% 100%",
+            });
+          }
+          gsap.set(preItems, { y: 26, autoAlpha: 0 });
+          gsap.set(items, { y: 46, autoAlpha: 0, scale: 0.985 });
+          gsap.set(media, {
+            y: 34,
+            autoAlpha: 0,
+            clipPath: "inset(0 0 18% 0 round 22px)",
+          });
+
+          const tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: section,
+              start: "top 72%",
+              once: true,
+            },
+            defaults: { ease: revealEase },
+          });
+
+          tl.to(preItems, { y: 0, autoAlpha: 1, duration: 0.54, stagger: 0.055 })
+            .to(title, { y: 0, autoAlpha: 1, clipPath: "inset(0 0 0% 0)", scaleY: 1, duration: 0.9, ease: signatureEase }, 0.08)
+            .to(media, { y: 0, autoAlpha: 1, clipPath: "inset(0 0 0% 0 round 22px)", duration: 0.82, stagger: 0.08 }, 0.28)
+            .to(items, { y: 0, autoAlpha: 1, scale: 1, duration: 0.72, stagger: 0.075 }, 0.38);
+
+          media.forEach((node) => {
+            gsap.to(node, {
+              yPercent: -4,
+              ease: "none",
+              scrollTrigger: {
+                trigger: section,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: 0.8,
+              },
+            });
+          });
+        });
+
+        gsap.utils.toArray(".project-card .project-image, .scene-video, .mini-asset").forEach((node) => {
+          gsap.fromTo(
+            node,
+            { yPercent: 3 },
+            {
+              yPercent: -3,
+              ease: "none",
+              scrollTrigger: {
+                trigger: node,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: 1,
+              },
+            }
+          );
+        });
+
+        ScrollTrigger.refresh();
+      };
+
+      window.addEventListener("load", initPremiumMotion, { once: true });
 
       preloadFrames();
       playCharacterState("default");
