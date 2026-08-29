@@ -2686,7 +2686,10 @@
         background:
           radial-gradient(circle at 86% 78%, rgba(124, 112, 216, 0.1), transparent 44%),
           linear-gradient(145deg, #ffffff 0%, #fbfbff 58%, #f7f8fc 100%);
-        will-change: transform;
+        box-shadow: 0 20px 54px rgba(70, 75, 120, 0.085), 0 1px 0 rgba(255, 255, 255, 0.9) inset;
+        contain: paint;
+        backface-visibility: hidden;
+        will-change: auto;
         transform: none;
         transition:
           transform 360ms cubic-bezier(0.22, 1, 0.36, 1),
@@ -2730,8 +2733,9 @@
 
       .work .project-card:hover {
         border-color: rgba(124, 112, 216, 0.25);
-        box-shadow: 0 34px 96px rgba(46, 45, 67, 0.12);
+        box-shadow: 0 28px 72px rgba(46, 45, 67, 0.105), 0 1px 0 rgba(255, 255, 255, 0.9) inset;
         transform: translateY(-8px);
+        will-change: transform;
       }
 
       .work .project-card:hover .tag:nth-child(2n + 1) {
@@ -2746,7 +2750,7 @@
       }
 
       .work .project-card:hover .project-image {
-        box-shadow: 0 38px 78px rgba(42, 45, 68, 0.18);
+        box-shadow: 0 30px 64px rgba(42, 45, 68, 0.15);
         transform: translateY(-8px) scale(1.03);
       }
 
@@ -3130,7 +3134,7 @@
         max-width: 800px;
         margin: 14px 0 0;
         color: #202438;
-        font-size: clamp(54px, 5.5vw, 88px);
+        font-size: clamp(42px, 4.2vw, 68px);
         font-weight: 760;
         letter-spacing: 0;
         line-height: 1.02;
@@ -3463,7 +3467,7 @@
         line-height: 1.6;
       }
 
-      .wechat-qr-placeholder {
+      .wechat-qr-frame {
         display: grid;
         aspect-ratio: 1;
         place-items: center;
@@ -3480,14 +3484,14 @@
         font-weight: 820;
       }
 
-      .wechat-qr-placeholder img {
+      .wechat-qr-frame img {
         display: block;
         width: 100%;
         height: 100%;
         object-fit: contain;
       }
 
-      .wechat-qr-placeholder.has-qr {
+      .wechat-qr-frame.has-qr {
         aspect-ratio: 0.72;
         border-color: rgba(32, 36, 56, 0.06);
         background: #fff;
@@ -3621,7 +3625,7 @@
         }
 
         .contact-title {
-          font-size: clamp(40px, 12vw, 52px);
+          font-size: clamp(34px, 10vw, 44px);
         }
 
         .contact-actions {
@@ -8686,7 +8690,8 @@
       }
 
       .work-hero {
-        padding-block: var(--section-y-lg);
+        padding-block: clamp(88px, 8vw, 124px) clamp(48px, 5vw, 72px);
+        margin-bottom: clamp(22px, 3vw, 40px);
       }
 
       .hero-stage,
@@ -8744,6 +8749,34 @@
         text-transform: uppercase;
       }
 
+      .section-eyebrow,
+      .hero-kicker,
+      .about-label,
+      .section-label,
+      .work-eyebrow,
+      .more-work-eyebrow,
+      .beyond-label,
+      .contact-eyebrow {
+        color: rgba(24, 28, 41, 0.42);
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        line-height: 1;
+        margin: 0 0 20px;
+        text-transform: uppercase;
+      }
+
+      .section-meta,
+      .journey-eyebrow {
+        margin: 16px 0 0;
+        color: rgba(24, 28, 41, 0.34);
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.1em;
+        line-height: 1.45;
+        text-transform: uppercase;
+      }
+
       .about-title,
       .journey-title,
       .ability-title,
@@ -8765,6 +8798,9 @@
       .more-work-title,
       .beyond-title {
         font-size: clamp(44px, 4.7vw, 72px);
+        line-height: 1.04;
+        font-weight: 700;
+        letter-spacing: -0.045em;
       }
 
       .about-text,
@@ -8780,6 +8816,32 @@
         font-size: clamp(16px, 1.25vw, 18px);
         font-weight: 400;
         line-height: 1.72;
+      }
+
+      .section-description,
+      .ability-subtitle,
+      .work-hero-description,
+      .beyond-subtitle,
+      .contact-description {
+        max-width: 620px;
+        margin-top: 20px;
+      }
+
+      .work-hero-title::after {
+        display: none;
+      }
+
+      .ability-copy {
+        max-width: 760px;
+        margin: 0;
+      }
+
+      .ability-copy .ability-subtitle {
+        margin-inline: 0;
+      }
+
+      .contact-footer-bar {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
       }
 
       .about-role,
@@ -9043,12 +9105,130 @@
         }
       }
 
+      .profile-card.core {
+        left: -1%;
+        top: 27%;
+      }
+
+      .profile-card.ai {
+        right: 0;
+        top: 16%;
+      }
+
+      .profile-card.code {
+        left: 20%;
+        top: 2%;
+      }
+
+      .profile-card.intj {
+        left: 1%;
+        bottom: 18%;
+      }
+
+      .profile-card.growth {
+        right: -1%;
+        top: 53%;
+      }
+
+      .profile-card.longterm {
+        right: 14%;
+        bottom: 3%;
+      }
+
+      .profile-card:hover,
+      .profile-card:focus-visible,
+      .profile-card.is-active {
+        transform: translate3d(var(--parallax-x, 0px), calc(var(--parallax-y, 0px) - 4px), 0) scale(1.018) rotate(var(--rotate, 0deg));
+      }
+
+      .about-visual .profile-card {
+        max-width: 210px;
+      }
+
+      .ability-card.product {
+        left: 8%;
+        top: 7%;
+        transform: rotate(-11deg);
+      }
+
+      .ability-card.product:hover,
+      .ability-card.product:focus-visible,
+      .ability-card.product.is-active {
+        transform: rotate(-5deg) scale(1.022) translateY(-5px);
+      }
+
+      .ability-card.design {
+        top: -4%;
+      }
+
+      .ability-card.design:hover,
+      .ability-card.design:focus-visible,
+      .ability-card.design.is-active {
+        transform: translateX(-50%) rotate(0deg) scale(1.026) translateY(-5px);
+      }
+
+      .ability-card.growth {
+        right: 8%;
+        top: 7%;
+        transform: rotate(11deg);
+      }
+
+      .ability-card.growth:hover,
+      .ability-card.growth:focus-visible,
+      .ability-card.growth.is-active {
+        transform: rotate(5deg) scale(1.022) translateY(-5px);
+      }
+
+      .ability-copy,
+      .ability-copy .ability-eyebrow,
+      .ability-copy .ability-title,
+      .ability-copy .ability-subtitle,
+      .ability-copy .section-meta {
+        text-align: center;
+      }
+
+      .ability-copy {
+        margin-inline: auto;
+      }
+
+      .ability-copy .ability-subtitle,
+      .ability-copy .section-meta {
+        margin-inline: auto;
+      }
+
+      .project-list {
+        margin-top: clamp(18px, 2.6vw, 36px);
+      }
+
+      .work,
+      .work .project-card {
+        scroll-snap-align: none;
+      }
+
+      .work .project-image {
+        aspect-ratio: 16 / 9;
+        contain: paint;
+      }
+
+      @media (max-width: 860px) {
+        .profile-card.core,
+        .profile-card.ai,
+        .profile-card.code,
+        .profile-card.intj,
+        .profile-card.growth,
+        .profile-card.longterm {
+          left: auto;
+          right: auto;
+          top: auto;
+          bottom: auto;
+        }
+      }
 
     </style>
   </head>
   <body>
     <nav class="nav" aria-label="主导航">
-      <a class="brand" href="#" aria-label="Bai Qingxin 首页">
+      <a class="brand" href="#start" aria-label="Bai Qingxin 首页">
         <span class="brand-mark" aria-hidden="true">Q</span>
         <span class="brand-name">QINGXINBAI</span>
       </a>
@@ -9065,31 +9245,19 @@
       </div>
     </nav>
 
-    <main class="hero" aria-label="Bai Qingxin personal homepage hero">
+    <main class="hero" id="start" aria-label="Bai Qingxin personal homepage hero">
       <div class="hero-reveal" aria-hidden="true">
         <img class="hero-reveal-before" src="assets/bai-qingxin/hero-transform-before.png" alt="" />
         <img class="hero-reveal-after" src="assets/bai-qingxin/hero-transform-after.png" alt="" />
       </div>
       <section class="hero-stage">
         <div class="hero-copy-block">
-          <p class="hero-kicker">AI NATIVE PRODUCT DESIGNER</p>
+          <p class="hero-kicker">01 / HELLO</p>
           <h1 class="hero-title">Turning fuzzy ideas<br />into real products.</h1>
           <p class="role">AI Native 复合体验设计师</p>
           <p class="hero-copy">
             Product Thinking × UX/UI × AI Experience
           </p>
-        </div>
-
-        <div class="hero-status" aria-label="核心能力">
-          <div class="status-item">
-            <span class="status-number">01</span>
-            <span class="status-label">Product Sense</span>
-          </div>
-          <span class="status-line" aria-hidden="true"></span>
-          <div class="status-item">
-            <span class="status-number">02</span>
-            <span class="status-label">AI Experience</span>
-          </div>
         </div>
 
         <span class="ground" aria-hidden="true"></span>
@@ -9101,7 +9269,7 @@
     <section class="about" id="about" aria-labelledby="about-title">
       <div class="about-inner">
         <div class="about-copy">
-          <p class="about-label">ABOUT / PROFILE_002</p>
+          <p class="about-label">02 / ABOUT</p>
           <h2 class="about-title" id="about-title">Hi, I’m Bai Qingxin 👋</h2>
           <p class="about-role">AI Native 复合体验设计师</p>
           <div class="about-text">
@@ -9277,9 +9445,10 @@
     <section class="ability" id="lab" aria-labelledby="ability-title">
       <div class="ability-inner">
         <div class="ability-copy">
-          <p class="ability-eyebrow">COMPOSITE COMPETENCY MODEL</p>
+          <p class="ability-eyebrow">04 / SUPERPOWERS</p>
           <h2 class="ability-title" id="ability-title">复合能力模型</h2>
           <p class="ability-subtitle">不止做界面，也理解产品和增长</p>
+          <p class="section-meta">COMPOSITE COMPETENCY MODEL</p>
         </div>
 
         <div class="ability-stage" aria-label="复合能力交互模型">
@@ -9344,8 +9513,9 @@
     <section class="work" id="work" aria-labelledby="work-title">
       <section class="work-hero" aria-labelledby="work-title">
         <div class="work-hero-copy">
-          <p class="work-eyebrow">SELECTED UI PROJECTS</p>
+          <p class="work-eyebrow">05 / SELECTED WORK</p>
           <h2 class="work-hero-title" id="work-title">精选作品</h2>
+          <p class="section-meta">SELECTED UI PROJECTS</p>
           <p class="work-hero-subtitle">大厂夯实专业根基，创业团队沉淀实战能力</p>
           <p class="work-hero-description">以下项目覆盖 AI 原生产品、0-1 创新项目、内容平台体验、复杂业务设计与增长转化场景。</p>
           <div class="work-hero-note">4 个精选案例，展示从判断到落地的完整设计能力</div>
@@ -9371,12 +9541,11 @@
               <span class="tag">视觉方案</span>
               <span class="tag">AI 辅助设计流程</span>
             </div>
-            <a class="details-button" href="#" aria-label="查看 围炉&蜜薯 小说APP 项目详情">View details <span>→</span></a>
+            <button class="details-button" type="button" aria-label="查看 围炉&蜜薯 小说APP 项目详情">View details <span>→</span></button>
           </div>
-          <figure class="project-visual visual-stack" aria-label="围炉&蜜薯 小说APP 视觉封面">
+          <figure class="project-visual" aria-label="围炉&蜜薯 小说APP 视觉封面">
             <div class="image-stage">
-              <img class="project-image" src="assets/projects/weilu-cover.png" alt="围炉小说 APP 项目封面" />
-              <img class="project-image" src="assets/projects/mishu-cover.png" alt="蜜薯小说 APP 项目封面" />
+              <img class="project-image" src="assets/projects/optimized/featured-preview-weilu-1600.jpg" alt="围炉小说 APP 项目封面" width="1600" height="900" fetchpriority="high" decoding="async" />
             </div>
           </figure>
         </article>
@@ -9398,11 +9567,11 @@
               <span class="tag">AI场景探索</span>
               <span class="tag">产品逻辑梳理</span>
             </div>
-            <a class="details-button" href="#" aria-label="查看 AI创新项目实践 项目详情">View details <span>→</span></a>
+            <button class="details-button" type="button" aria-label="查看 AI创新项目实践 项目详情">View details <span>→</span></button>
           </div>
           <figure class="project-visual" aria-label="AI创新项目实践 视觉封面">
             <div class="image-stage">
-              <img class="project-image" src="assets/projects/kelu-cover.png" alt="AI创新项目实践 项目封面" />
+              <img class="project-image" src="assets/projects/optimized/featured-preview-kelu-1600.jpg" alt="AI创新项目实践 项目封面" width="1600" height="900" loading="lazy" decoding="async" />
             </div>
           </figure>
         </article>
@@ -9424,11 +9593,11 @@
               <span class="tag">出海产品</span>
               <span class="tag">交互设计</span>
             </div>
-            <a class="details-button" href="#" aria-label="查看 AI出海内容创作工作台 项目详情">View details <span>→</span></a>
+            <button class="details-button" type="button" aria-label="查看 AI出海内容创作工作台 项目详情">View details <span>→</span></button>
           </div>
           <figure class="project-visual" aria-label="AI出海内容创作工作台 视觉封面">
             <div class="image-stage">
-              <img class="project-image" src="assets/projects/ai-project-cover.webp" alt="AI出海内容创作工作台 项目封面" />
+              <img class="project-image" src="assets/projects/optimized/featured-preview-topick-1600.jpg" alt="AI出海内容创作工作台 项目封面" width="1600" height="900" loading="lazy" decoding="async" />
             </div>
           </figure>
         </article>
@@ -9451,11 +9620,11 @@
               <span class="tag">AIGC</span>
               <span class="tag">团队项目</span>
             </div>
-            <a class="details-button" href="#" aria-label="查看 团队向 · 文库AI项目 项目详情">View details <span>→</span></a>
+            <button class="details-button" type="button" aria-label="查看 团队向 · 文库AI项目 项目详情">View details <span>→</span></button>
           </div>
           <figure class="project-visual" aria-label="团队向 · 文库AI项目 视觉封面">
             <div class="image-stage">
-              <img class="project-image" src="assets/projects/baidu-wenku-cover.webp" alt="团队向 · 文库AI项目 项目封面" />
+              <img class="project-image" src="assets/projects/optimized/featured-preview-baidu-wenku-1600.jpg" alt="团队向 · 文库AI项目 项目封面" width="1600" height="900" loading="lazy" decoding="async" />
             </div>
           </figure>
         </article>
@@ -9463,7 +9632,7 @@
 
       <section class="more-work" id="more-work" aria-labelledby="more-work-title">
         <div class="more-work-header">
-          <p class="more-work-eyebrow">More Work / 03</p>
+          <p class="more-work-eyebrow">06 / MORE WORK</p>
           <h2 class="more-work-title" id="more-work-title">其他项目</h2>
         </div>
         <div class="more-work-filters" data-more-filters aria-label="其他项目分类筛选"></div>
@@ -9473,7 +9642,7 @@
 
     <section class="beyond" id="beyond" aria-labelledby="beyond-title" data-scene="content">
       <div class="beyond-header">
-        <p class="beyond-label">BEYOND / 08</p>
+        <p class="beyond-label">07 / BEYOND</p>
         <div class="beyond-title-row">
           <div>
             <h2 class="beyond-title" id="beyond-title">设计之外，也很有趣</h2>
@@ -9619,13 +9788,13 @@
         </div>
       </div>
 
-      <a class="beyond-next" href="#contact">NEXT / 09&nbsp;&nbsp; LET'S TALK ↓</a>
+      <a class="beyond-next" href="#contact">NEXT / 08&nbsp;&nbsp; LET'S TALK ↓</a>
     </section>
 
     <section class="contact-section" id="contact" aria-labelledby="contact-title" tabindex="-1">
       <div class="contact-inner">
         <div class="contact-copy">
-          <p class="contact-eyebrow">CONTACT / 09</p>
+          <p class="contact-eyebrow">08 / CONTACT</p>
           <p class="contact-status">OPEN TO AI PRODUCT · EXPERIENCE DESIGN · 0→1</p>
           <p class="contact-kicker">LET’S MAKE IT REAL.</p>
           <h2 class="contact-title" id="contact-title">下一个真实产品，<br />或许从这次对话开始。</h2>
@@ -9634,7 +9803,6 @@
           <div class="contact-actions" aria-label="联系操作">
             <a class="contact-cta primary" data-contact-mail href="mailto:qingxinbai06@gmail.com">发送邮件 <span aria-hidden="true">↗</span></a>
             <button class="contact-cta secondary" type="button" data-copy-wechat>复制微信</button>
-            <a class="contact-cta outline is-disabled" data-resume-link href="#" aria-disabled="true" download="Bai-Qingxin-Resume.pdf">下载简历 ↓</a>
           </div>
 
           <button class="contact-ai-entry" type="button" data-contact-ai>
@@ -9661,11 +9829,7 @@
           </div>
           <div class="contact-footer-item">
             <span>WeChat</span>
-            <strong data-contact-wechat>待配置</strong>
-          </div>
-          <div class="contact-footer-item">
-            <span>Resume</span>
-            <strong data-contact-resume-state>未配置 PDF</strong>
+            <strong data-contact-wechat>甜茶</strong>
           </div>
         </div>
 
@@ -9682,8 +9846,10 @@
       <div class="wechat-card" role="dialog" aria-modal="true" aria-labelledby="wechat-title">
         <button class="wechat-close" type="button" data-wechat-close aria-label="关闭微信二维码">×</button>
         <h3 id="wechat-title">微信联系</h3>
-        <p data-wechat-copy>微信号待配置。给我真实微信号和二维码图片后，这里会自动显示可复制信息与二维码。</p>
-        <div class="wechat-qr-placeholder" data-wechat-qr>二维码待配置</div>
+        <p data-wechat-copy>微信号：甜茶</p>
+        <div class="wechat-qr-frame has-qr" data-wechat-qr>
+          <img src="assets/bai-qingxin/contact/wechat-qr.jpg" alt="Bai Qingxin 微信二维码" loading="lazy" />
+        </div>
       </div>
     </div>
 
@@ -9749,8 +9915,6 @@
       </section>
     </aside>
 
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
     <script>
       const nav = document.querySelector(".nav");
       const navLinks = Array.from(document.querySelectorAll(".nav-links a[href^='#']"));
@@ -10099,8 +10263,8 @@
         }
       });
 
-      const makeFeaturedProjectPages = (folder, count) =>
-        Array.from({ length: count }, (_, index) => `assets/projects/featured/${folder}/page-${String(index + 1).padStart(2, "0")}.webp`);
+      const makeFeaturedProjectPages = (folder, count, extension = "webp") =>
+        Array.from({ length: count }, (_, index) => `assets/projects/featured/${folder}/page-${String(index + 1).padStart(2, "0")}.${extension}`);
 
       const selectedProjects = [
         {
@@ -10109,7 +10273,8 @@
           statement: "围绕阅读激励、福利盲盒与内容消费路径，完成从体验策略到高保真界面的设计探索。",
           tags: ["体验设计师", "UI 设计", "视觉方案", "AI 辅助设计流程"],
           value: "探索小说阅读产品中的激励机制、任务体系与福利转化路径，提升用户停留和活动参与意愿。",
-          images: ["assets/projects/weilu-cover.png", "assets/projects/mishu-cover.png"],
+          previewImages: ["assets/projects/optimized/featured-preview-weilu-1600.jpg"],
+          images: makeFeaturedProjectPages("weilu-novel", 11, "jpg"),
         },
         {
           title: "AI创新项目实践",
@@ -10117,7 +10282,8 @@
           statement: "围绕 AI 辅助生活服务、信息理解与交互效率，参与从概念验证到体验落地的设计过程。",
           tags: ["AI 辅助全链路设计", "0-1项目", "AI场景探索", "产品逻辑梳理"],
           value: "在不确定需求中拆解用户场景，完成 AI 产品从概念、流程到界面的体验表达。",
-          images: ["assets/projects/kelu-cover.png"],
+          previewImages: ["assets/projects/optimized/featured-preview-kelu-1600.jpg"],
+          images: makeFeaturedProjectPages("kelu-ai", 5, "jpg"),
         },
         {
           title: "AI出海内容创作工作台",
@@ -10125,6 +10291,7 @@
           statement: "面向视频创作者设计 AI 生成与创作管理工作台，覆盖选题、生成、编辑与发布流程。",
           tags: ["AI 产品体验设计策略", "AI 工作流", "出海产品", "交互设计"],
           value: "沉淀 AI 创作工具的核心工作流，提升内容生成、编辑与管理的效率。",
+          previewImages: ["assets/projects/optimized/featured-preview-topick-1600.jpg"],
           images: makeFeaturedProjectPages("topick-ai", 8),
         },
         {
@@ -10133,6 +10300,7 @@
           statement: "参与百度文库 AI PPT 专项体验升级，优化生成式内容工具的使用路径、结果呈现与编辑体验。",
           tags: ["AB测试", "数据驱动优化", "体验升级", "AIGC", "团队项目"],
           value: "通过专项体验优化，提升 AI PPT 工具链路的清晰度、使用效率和结果感知。",
+          previewImages: ["assets/projects/optimized/featured-preview-baidu-wenku-1600.jpg"],
           images: makeFeaturedProjectPages("baidu-wenku", 17),
         },
       ];
@@ -10962,6 +11130,10 @@
           if (wechatCopy) {
             wechatCopy.textContent = `微信号：${contactConfig.wechat}`;
           }
+        } else {
+          copyWechatButton?.remove();
+          contactWechatText?.closest(".contact-footer-item")?.remove();
+          wechatPopover?.remove();
         }
 
         if (contactConfig.wechatQr && wechatQr) {
@@ -10976,6 +11148,9 @@
           if (contactResumeState) {
             contactResumeState.textContent = "Bai-Qingxin-Resume.pdf";
           }
+        } else {
+          resumeLink?.remove();
+          contactResumeState?.closest(".contact-footer-item")?.remove();
         }
       };
 
@@ -10984,12 +11159,6 @@
       copyWechatButton?.addEventListener("click", async () => {
         window.clearTimeout(contactCopyTimer);
         if (!contactConfig.wechat) {
-          copyWechatButton.textContent = "微信待配置";
-          setContactLive("微信号暂未配置。");
-          openWechatPopover(copyWechatButton);
-          contactCopyTimer = window.setTimeout(() => {
-            copyWechatButton.textContent = "复制微信";
-          }, 2000);
           return;
         }
 
@@ -11014,11 +11183,6 @@
           return;
         }
         event.preventDefault();
-        resumeLink.textContent = "简历待配置";
-        setContactLive("简历文件暂未配置。");
-        window.setTimeout(() => {
-          resumeLink.textContent = "下载简历 ↓";
-        }, 1800);
       });
 
       contactAiButton?.addEventListener("click", (event) => {
@@ -11193,8 +11357,9 @@
         projectTrack.innerHTML = selectedProjects
           .map((project, index) => {
             const projectNumber = String(index + 1).padStart(2, "0");
-            const imageMarkup = project.images
-              .map((src, imageIndex) => `<img class="project-image" src="${src}" alt="${project.title} 项目封面 ${imageIndex + 1}" />`)
+            const previewImages = project.previewImages || project.images;
+            const imageMarkup = previewImages
+              .map((src, imageIndex) => `<img class="project-image" src="${src}" alt="${project.title} 项目封面 ${imageIndex + 1}" width="1600" height="900" ${index === 0 && imageIndex === 0 ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async" />`)
               .join("");
             const tagMarkup = project.tags.map((tag) => `<span class="tag">${tag}</span>`).join("");
             return `
@@ -11212,7 +11377,7 @@
                   <div class="tag-list" aria-label="${project.title} 标签">${tagMarkup}</div>
                   <button class="details-button" type="button" aria-label="查看 ${project.title} 详情">查看详情 <span>→</span></button>
                 </div>
-                <figure class="project-visual ${project.images.length > 1 ? "visual-stack" : ""}" aria-label="${project.title} 视觉封面">
+                <figure class="project-visual ${previewImages.length > 1 ? "visual-stack" : ""}" aria-label="${project.title} 视觉封面">
                   <div class="image-stage">${imageMarkup}</div>
                 </figure>
               </article>
@@ -11688,164 +11853,6 @@
         );
         beyondObserver.observe(beyondSection);
       }
-
-      const initPremiumMotion = () => {
-        if (reduceMotion || !window.gsap || !window.ScrollTrigger) {
-          return;
-        }
-
-        const gsap = window.gsap;
-        const ScrollTrigger = window.ScrollTrigger;
-        gsap.registerPlugin(ScrollTrigger);
-
-        const easeOut = "power3.out";
-        const signatureEase = "expo.out";
-        const revealEase = "power4.out";
-
-        gsap.set(".nav", { y: -28, autoAlpha: 0 });
-        gsap.set([".hero-kicker", ".hero-title", ".hero-copy", ".hero-status", ".scroll-cue"], {
-          y: 42,
-          autoAlpha: 0,
-        });
-        gsap.set(".hero-title", {
-          clipPath: "inset(0 0 100% 0)",
-          scaleY: 0.88,
-          transformOrigin: "50% 100%",
-        });
-        gsap.set(".hero-reveal img", { scale: 1.06, filter: "blur(8px)" });
-
-        const heroTl = gsap.timeline({ defaults: { ease: revealEase } });
-        heroTl
-          .to(".hero-reveal img", { scale: 1, filter: "blur(0px)", duration: 1.45 })
-          .to(".nav", { y: 0, autoAlpha: 1, duration: 0.68 }, 0.12)
-          .to(".hero-kicker", { y: 0, autoAlpha: 1, duration: 0.62 }, 0.34)
-          .to(".hero-title", { y: 0, autoAlpha: 1, clipPath: "inset(0 0 0% 0)", scaleY: 1, duration: 1.08, ease: signatureEase }, 0.46)
-          .to(".hero-copy", { y: 0, autoAlpha: 1, duration: 0.7 }, 0.88)
-          .to(".hero-status", { y: 0, autoAlpha: 1, duration: 0.72 }, 1.02)
-          .to(".scroll-cue", { y: 0, autoAlpha: 1, duration: 0.58 }, 1.2);
-
-        const sectionConfigs = [
-          {
-            section: ".about",
-            title: ".about-title",
-            pre: ".about-label, .about-kicker, .about-badge",
-            items: ".about-action, .metric, .profile-card, .current-mode",
-            media: ".profile-visual img",
-          },
-          {
-            section: ".journey",
-            title: ".journey-title",
-            pre: ".section-label, .journey-eyebrow, .journey-subtitle",
-            items: ".career-card, .journey-body, .path-summary, .ip-state",
-            media: ".journey-ip",
-          },
-          {
-            section: ".ability",
-            title: ".ability-title",
-            pre: ".ability-eyebrow, .ability-subtitle",
-            items: ".ability-card, .ability-summary, .mood-label",
-            media: ".ability-character img",
-          },
-          {
-            section: ".work",
-            title: ".work-hero-title",
-            pre: ".work-eyebrow, .work-hero-subtitle, .work-hero-description, .work-hero-note",
-            items: ".project-card, .more-work-header, .more-work-filters, .more-work-grid",
-            media: ".project-visual .image-stage",
-          },
-          {
-            section: ".beyond",
-            title: ".beyond-title",
-            pre: ".beyond-label, .beyond-en, .beyond-subtitle, .beyond-method-note",
-            items: ".scene-card, .beyond-controls, .beyond-next",
-            media: ".scene-assets, .scene-visual",
-          },
-          {
-            section: ".contact-section",
-            title: ".contact-title",
-            pre: ".contact-eyebrow, .contact-status, .contact-kicker",
-            items: ".contact-description, .contact-actions, .contact-ai-entry, .contact-footer-bar, .contact-copyright",
-            media: ".contact-visual",
-          },
-        ];
-
-        sectionConfigs.forEach((config) => {
-          const section = document.querySelector(config.section);
-          if (!section) {
-            return;
-          }
-
-          const title = section.querySelector(config.title);
-          const preItems = gsap.utils.toArray(section.querySelectorAll(config.pre));
-          const items = gsap.utils.toArray(section.querySelectorAll(config.items));
-          const media = gsap.utils.toArray(section.querySelectorAll(config.media));
-
-          if (title) {
-            gsap.set(title, {
-              y: 76,
-              autoAlpha: 0,
-              clipPath: "inset(0 0 100% 0)",
-              scaleY: 0.92,
-              transformOrigin: "50% 100%",
-            });
-          }
-          gsap.set(preItems, { y: 26, autoAlpha: 0 });
-          gsap.set(items, { y: 46, autoAlpha: 0, scale: 0.985 });
-          gsap.set(media, {
-            y: 34,
-            autoAlpha: 0,
-            clipPath: "inset(0 0 18% 0 round 22px)",
-          });
-
-          const tl = gsap.timeline({
-            scrollTrigger: {
-              trigger: section,
-              start: "top 72%",
-              once: true,
-            },
-            defaults: { ease: revealEase },
-          });
-
-          tl.to(preItems, { y: 0, autoAlpha: 1, duration: 0.54, stagger: 0.055 })
-            .to(title, { y: 0, autoAlpha: 1, clipPath: "inset(0 0 0% 0)", scaleY: 1, duration: 0.9, ease: signatureEase }, 0.08)
-            .to(media, { y: 0, autoAlpha: 1, clipPath: "inset(0 0 0% 0 round 22px)", duration: 0.82, stagger: 0.08 }, 0.28)
-            .to(items, { y: 0, autoAlpha: 1, scale: 1, duration: 0.72, stagger: 0.075 }, 0.38);
-
-          media.forEach((node) => {
-            gsap.to(node, {
-              yPercent: -4,
-              ease: "none",
-              scrollTrigger: {
-                trigger: section,
-                start: "top bottom",
-                end: "bottom top",
-                scrub: 0.8,
-              },
-            });
-          });
-        });
-
-        gsap.utils.toArray(".project-card .project-image, .scene-video, .mini-asset").forEach((node) => {
-          gsap.fromTo(
-            node,
-            { yPercent: 3 },
-            {
-              yPercent: -3,
-              ease: "none",
-              scrollTrigger: {
-                trigger: node,
-                start: "top bottom",
-                end: "bottom top",
-                scrub: 1,
-              },
-            }
-          );
-        });
-
-        ScrollTrigger.refresh();
-      };
-
-      window.addEventListener("load", initPremiumMotion, { once: true });
 
       preloadFrames();
       playCharacterState("default");
