@@ -3923,6 +3923,26 @@
         opacity: 1;
       }
 
+      .project-detail-scroll-hint {
+        margin: clamp(24px, 3vw, 36px) 0 0;
+        color: rgba(32, 36, 56, 0.42);
+        font-size: 11px;
+        font-weight: 850;
+        letter-spacing: 0.16em;
+        line-height: 1;
+        text-align: center;
+        text-transform: uppercase;
+        opacity: 0;
+        transform: translateY(8px);
+        transition: opacity 240ms ease, transform 240ms ease;
+        pointer-events: none;
+      }
+
+      .project-detail-scroll.is-near-bottom .project-detail-scroll-hint {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
       .project-detail-actions {
         display: grid;
         grid-template-columns: 1fr auto 1fr;
@@ -3996,6 +4016,17 @@
           "Hiragino Sans GB",
           "Microsoft YaHei",
           sans-serif;
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(12px);
+        transition: opacity 260ms ease, transform 260ms ease;
+      }
+
+      .xiaobai-assistant.is-page-visible,
+      .xiaobai-assistant.is-open {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
       }
 
       .body-detail-open .xiaobai-assistant {
@@ -4445,7 +4476,7 @@
         }
 
         .project-detail-panel {
-          height: calc(100dvh - 64px);
+          height: auto;
         }
       }
 
@@ -4478,16 +4509,16 @@
         }
 
         .project-detail-overlay {
-          padding: 16px;
+          padding: 56px 16px 72px;
         }
 
         .project-detail-panel {
-          height: calc(100dvh - 32px);
-          border-radius: 20px;
+          height: auto;
+          border-radius: 0;
         }
 
         .project-detail-scroll {
-          padding: 20px;
+          padding: 0;
         }
 
         .project-detail-close {
@@ -9050,15 +9081,20 @@
       }
 
       .project-detail-overlay {
-        background: rgba(17, 19, 29, 0.22);
-        backdrop-filter: blur(20px);
+        background:
+          radial-gradient(circle at 76% 12%, color-mix(in srgb, var(--detail-accent, var(--brand-violet)) 10%, transparent), transparent 34%),
+          radial-gradient(circle at 16% 72%, rgba(114, 168, 255, 0.08), transparent 38%),
+          #f8f8fb;
+        backdrop-filter: none;
       }
 
       .project-detail-panel {
-        background:
-          radial-gradient(circle at 80% 6%, color-mix(in srgb, var(--detail-accent, var(--brand-violet)) 12%, transparent), transparent 36%),
-          radial-gradient(circle at 12% 86%, rgba(114, 168, 255, 0.075), transparent 42%),
-          rgba(250, 250, 252, 0.94);
+        height: auto;
+        overflow: visible;
+        border: 0;
+        background: transparent;
+        box-shadow: none;
+        transform: none;
       }
 
       .more-card {
@@ -9135,6 +9171,197 @@
         bottom: 3%;
       }
 
+      /* Beyond carousel is controlled by activeSceneIndex only: no free drag or free horizontal scroll. */
+      .beyond-track-wrap {
+        overflow: visible;
+      }
+
+      .beyond-track {
+        position: relative;
+        display: block;
+        overflow: visible;
+        padding: 0;
+        scroll-snap-type: none;
+        touch-action: pan-y;
+      }
+
+      .beyond-track.is-dragging {
+        cursor: default;
+      }
+
+      .scene-card,
+      .scene-card.photography {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        scroll-snap-align: none;
+        will-change: transform, opacity, filter;
+      }
+
+      .beyond.is-visible .scene-card,
+      .beyond .scene-card {
+        opacity: 0;
+        filter: blur(1.5px);
+        transform: translate(-50%, -48%) translateX(0) scale(0.82);
+        pointer-events: none;
+      }
+
+      .beyond.is-visible .scene-card.is-active,
+      .beyond .scene-card.is-active {
+        opacity: 1;
+        filter: blur(0);
+        transform: translate(-50%, -50%) translateX(0) scale(1);
+        z-index: 5;
+        pointer-events: auto;
+        cursor: default;
+      }
+
+      .beyond.is-visible .scene-card.is-prev,
+      .beyond .scene-card.is-prev {
+        opacity: 0.56;
+        filter: blur(0.8px);
+        transform: translate(-50%, -50%) translateX(calc(-1 * min(46vw, 610px))) scale(0.92);
+        z-index: 3;
+        pointer-events: auto;
+        cursor: pointer;
+      }
+
+      .beyond.is-visible .scene-card.is-next,
+      .beyond .scene-card.is-next {
+        opacity: 0.56;
+        filter: blur(0.8px);
+        transform: translate(-50%, -50%) translateX(min(46vw, 610px)) scale(0.92);
+        z-index: 3;
+        pointer-events: auto;
+        cursor: pointer;
+      }
+
+      .beyond.is-visible .scene-card.is-far,
+      .beyond .scene-card.is-far {
+        opacity: 0;
+        filter: blur(2px);
+        transform: translate(-50%, -50%) scale(0.82);
+        z-index: 1;
+      }
+
+      .beyond.is-visible .scene-card.is-active:hover,
+      .beyond.is-visible .scene-card.is-active:focus-visible {
+        transform: translate(-50%, -50%) translateY(-4px) scale(1.012);
+      }
+
+      .beyond-arrow {
+        display: grid;
+        width: 48px;
+        min-width: 48px;
+        height: 48px;
+        place-items: center;
+        border: 1px solid rgba(24, 29, 43, 0.1);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.82);
+        color: #1b1f2e;
+        box-shadow: 0 8px 24px rgba(27, 33, 52, 0.06);
+        backdrop-filter: blur(12px);
+        font-size: 21px;
+        line-height: 1;
+        transition: transform 240ms ease, border-color 240ms ease, background 240ms ease, box-shadow 240ms ease;
+      }
+
+      .beyond-arrow:hover,
+      .beyond-arrow:focus-visible {
+        border-color: rgba(24, 29, 43, 0.18);
+        background: rgba(255, 255, 255, 0.96);
+        outline: none;
+        transform: scale(1.05);
+      }
+
+      .beyond-arrow:active {
+        transform: scale(0.96);
+      }
+
+      .beyond .scene-card.is-prev::after,
+      .beyond .scene-card.is-next::after {
+        position: absolute;
+        top: 50%;
+        z-index: 12;
+        padding: 8px 12px;
+        border: 1px solid rgba(24, 29, 43, 0.08);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.74);
+        color: rgba(24, 29, 43, 0.72);
+        box-shadow: 0 10px 26px rgba(27, 33, 52, 0.07);
+        backdrop-filter: blur(12px);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(-50%);
+        transition: opacity 240ms ease, transform 240ms ease;
+      }
+
+      .beyond .scene-card.is-prev::after {
+        content: "← PREV";
+        right: 34px;
+      }
+
+      .beyond .scene-card.is-next::after {
+        content: "NEXT →";
+        left: 34px;
+      }
+
+      .beyond .scene-card.is-prev:hover,
+      .beyond .scene-card.is-prev:focus-visible {
+        opacity: 0.68;
+        filter: blur(0.5px);
+        transform: translate(-50%, -50%) translateX(calc(-1 * min(46vw, 610px))) scale(0.94);
+        outline: none;
+      }
+
+      .beyond .scene-card.is-next:hover,
+      .beyond .scene-card.is-next:focus-visible {
+        opacity: 0.68;
+        filter: blur(0.5px);
+        transform: translate(-50%, -50%) translateX(min(46vw, 610px)) scale(0.94);
+        outline: none;
+      }
+
+      .beyond .scene-card.is-prev:hover::after,
+      .beyond .scene-card.is-prev:focus-visible::after,
+      .beyond .scene-card.is-next:hover::after,
+      .beyond .scene-card.is-next:focus-visible::after {
+        opacity: 0.72;
+      }
+
+      @media (max-width: 860px) {
+        .beyond-track {
+          overflow: visible;
+        }
+
+        .beyond-arrow {
+          width: 46px;
+          min-width: 46px;
+          height: 46px;
+          font-size: 20px;
+        }
+
+        .beyond.is-visible .scene-card.is-prev,
+        .beyond .scene-card.is-prev {
+          opacity: 0.42;
+          transform: translate(-50%, -50%) translateX(-72vw) scale(0.88);
+        }
+
+        .beyond.is-visible .scene-card.is-next,
+        .beyond .scene-card.is-next {
+          opacity: 0.42;
+          transform: translate(-50%, -50%) translateX(72vw) scale(0.88);
+        }
+
+        .beyond .scene-card.is-prev::after,
+        .beyond .scene-card.is-next::after {
+          display: none;
+        }
+      }
+
       .profile-card:hover,
       .profile-card:focus-visible,
       .profile-card.is-active {
@@ -9177,6 +9404,246 @@
       .ability-card.growth:focus-visible,
       .ability-card.growth.is-active {
         transform: rotate(5deg) scale(1.022) translateY(-5px);
+      }
+
+      /* Beyond final vertical rhythm: Header / Stage / Controls. */
+      .beyond {
+        min-height: 100svh;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        padding-top: clamp(64px, 7vh, 80px);
+        padding-bottom: clamp(56px, 6vh, 72px);
+        overflow: hidden;
+      }
+
+      .beyond-header {
+        width: min(1180px, calc(100vw - 96px));
+        margin: 0 auto clamp(72px, 8vh, 96px);
+        flex: 0 0 auto;
+        position: relative;
+        z-index: 8;
+      }
+
+      .beyond-label {
+        margin-bottom: 20px;
+      }
+
+      .beyond-title {
+        font-size: clamp(44px, 4.7vw, 64px);
+        line-height: 1.02;
+      }
+
+      .beyond-en {
+        margin-top: 12px;
+      }
+
+      .beyond-subtitle {
+        margin-top: clamp(12px, 1.6vh, 18px);
+      }
+
+      .beyond-method-note {
+        position: relative;
+        z-index: 9;
+      }
+
+      .beyond-track-wrap {
+        width: 100%;
+        height: clamp(430px, 44vh, 520px);
+        margin: 0 auto;
+        flex: 0 0 auto;
+        overflow: visible;
+      }
+
+      .beyond-track {
+        height: 100%;
+        overflow: visible;
+      }
+
+      .scene-card,
+      .scene-card.photography {
+        width: clamp(660px, 62vw, 850px);
+        flex-basis: clamp(660px, 62vw, 850px);
+        height: clamp(420px, 43vh, 500px);
+      }
+
+      .beyond-controls {
+        width: min(520px, calc(100vw - 48px));
+        margin: clamp(28px, 3.5vh, 36px) auto 0;
+        display: grid;
+        grid-template-columns: 48px minmax(0, 1fr) 48px;
+        align-items: center;
+        justify-content: center;
+        gap: 18px;
+        flex: 0 0 auto;
+        position: relative;
+        z-index: 10;
+      }
+
+      .beyond-arrows {
+        display: contents;
+      }
+
+      .beyond-arrow {
+        width: 48px;
+        min-width: 48px;
+        height: 48px;
+        padding: 0;
+      }
+
+      .beyond-arrow[data-beyond-prev] {
+        grid-column: 1;
+        grid-row: 1;
+      }
+
+      .beyond-arrow[data-beyond-next] {
+        grid-column: 3;
+        grid-row: 1;
+      }
+
+      .beyond-progress {
+        grid-column: 2;
+        grid-row: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 13px;
+      }
+
+      .beyond-count {
+        min-width: 58px;
+      }
+
+      .beyond .progress-button {
+        position: relative;
+        opacity: 0.36;
+      }
+
+      .beyond .progress-button.is-active {
+        opacity: 1;
+        font-weight: 700;
+      }
+
+      .beyond .progress-button.is-active::before {
+        content: "";
+        position: absolute;
+        left: 1px;
+        right: 1px;
+        bottom: -7px;
+        height: 1px;
+        background: rgba(24, 29, 43, 0.62);
+      }
+
+      .beyond .progress-button:not(:last-child)::after {
+        opacity: 0.75;
+      }
+
+      @media (max-width: 860px) {
+        .beyond {
+          padding-top: 56px;
+          padding-bottom: 60px;
+        }
+
+        .beyond-header {
+          width: calc(100vw - 40px);
+          margin-bottom: 54px;
+        }
+
+        .beyond-track-wrap {
+          height: 520px;
+        }
+
+        .scene-card,
+        .scene-card.photography {
+          width: min(92vw, 520px);
+          height: 500px;
+        }
+
+        .beyond-controls {
+          grid-template-columns: 46px minmax(0, 1fr) 46px;
+          width: min(420px, calc(100vw - 32px));
+          margin-top: 28px;
+        }
+      }
+
+      /* Restore Selected Work detail to the previous full-screen overlay mode. */
+      .project-detail-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 120;
+        display: grid;
+        place-items: end center;
+        min-height: auto;
+        padding: clamp(32px, 4vw, 48px);
+        background: rgba(17, 19, 29, 0.24);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 500ms cubic-bezier(0.22, 1, 0.36, 1);
+        backdrop-filter: blur(18px);
+      }
+
+      .project-detail-overlay.is-open {
+        display: grid;
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .project-detail-panel {
+        position: relative;
+        display: block;
+        width: min(1600px, 100%);
+        height: calc(100dvh - 80px);
+        margin: 0;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.82);
+        border-radius: 28px;
+        background:
+          radial-gradient(circle at 78% 10%, color-mix(in srgb, var(--detail-accent, #8d88ff) 13%, transparent), transparent 32%),
+          radial-gradient(circle at 12% 82%, rgba(114, 168, 255, 0.08), transparent 38%),
+          rgba(250, 250, 252, 0.92);
+        box-shadow: 0 32px 110px rgba(18, 20, 34, 0.22);
+        transform: translateY(72px);
+        transition: transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
+        backdrop-filter: blur(24px);
+      }
+
+      .project-detail-overlay.is-open .project-detail-panel {
+        transform: translateY(0);
+      }
+
+      .project-detail-close {
+        position: fixed;
+        right: clamp(48px, 5vw, 70px);
+        top: clamp(48px, 5vw, 70px);
+        margin: 0;
+      }
+
+      .project-detail-scroll {
+        height: 100%;
+        overflow: auto;
+        padding: clamp(28px, 4vw, 56px);
+      }
+
+      @media (max-width: 980px) {
+        .project-detail-panel {
+          height: calc(100dvh - 64px);
+        }
+      }
+
+      @media (max-width: 620px) {
+        .project-detail-overlay {
+          padding: 16px;
+        }
+
+        .project-detail-panel {
+          height: calc(100dvh - 32px);
+          border-radius: 20px;
+        }
+
+        .project-detail-scroll {
+          padding: 20px;
+        }
       }
 
       .ability-copy,
@@ -9853,6 +10320,7 @@
             <div class="project-detail-media" data-project-detail-media></div>
           </div>
           <div class="project-detail-gallery" data-project-detail-gallery></div>
+          <p class="project-detail-scroll-hint" data-project-detail-scroll-hint>SCROLL TO NEXT CASE ↓</p>
           <div class="project-detail-actions">
             <button class="project-detail-nav previous" type="button" data-project-detail-prev>
               <span>← Previous</span>
@@ -10295,6 +10763,7 @@
 
       const selectedProjects = [
         {
+          slug: "topick",
           title: "AI出海内容创作工作台",
           meta: "2025 · TOPICK AI · B端工具",
           statement: "面向视频创作者设计 AI 生成与创作管理工作台，覆盖选题、生成、编辑与发布流程。",
@@ -10304,6 +10773,7 @@
           images: makeFeaturedProjectPages("topick-ai", 8),
         },
         {
+          slug: "ai-innovation",
           title: "AI创新项目实践",
           meta: "2026 · 追觅创新项目 · C端 UI/产品",
           statement: "围绕 AI 辅助生活服务、信息理解与交互效率，参与从概念验证到体验落地的设计过程。",
@@ -10313,6 +10783,7 @@
           images: makeFeaturedProjectPages("kelu-ai", 5, "jpg"),
         },
         {
+          slug: "baidu",
           title: "团队向 · 文库AI项目",
           meta: "2024 · 百度文库 · AIGC 内容平台",
           statement: "参与百度文库 AI PPT 专项体验升级，优化生成式内容工具的使用路径、结果呈现与编辑体验。",
@@ -10322,6 +10793,7 @@
           images: makeFeaturedProjectPages("baidu-wenku", 17),
         },
         {
+          slug: "novel",
           title: "围炉&蜜薯 小说APP",
           meta: "2026 · 追觅创新项目 · C端 UI/UX",
           statement: "围绕阅读激励、福利盲盒与内容消费路径，完成从体验策略到高保真界面的设计探索。",
@@ -10636,6 +11108,10 @@
       let lastFocusedProjectTrigger = null;
       let detailScrollY = 0;
       let detailCloseTimer = 0;
+      let detailBottomDelta = 0;
+      let detailTouchStartY = 0;
+      let detailTouchLastY = 0;
+      let isDetailSwitching = false;
 
       const getProjectRole = (project) => project.meta.split("·").pop()?.trim() || "Experience Design";
       const getProjectYear = (project) => (project.year || (project.meta.match(/\d{4}/) || ["2026"])[0]);
@@ -10663,12 +11139,12 @@
       };
 
       const unlockDetailScroll = () => {
-        document.body.classList.remove("body-lock");
         document.body.style.position = "";
         document.body.style.top = "";
         document.body.style.left = "";
         document.body.style.right = "";
         document.body.style.width = "";
+        document.body.classList.remove("body-lock");
         window.scrollTo(0, detailScrollY);
       };
 
@@ -10679,9 +11155,10 @@
         }
 
         activeDetailIndex = index;
+        detailOverlay?.style.setProperty("--detail-accent", project.accent || "#8d88ff");
         const previousProject = allPortfolioProjects[(index - 1 + allPortfolioProjects.length) % allPortfolioProjects.length];
         const nextProject = allPortfolioProjects[(index + 1) % allPortfolioProjects.length];
-        detailOverlay?.style.setProperty("--detail-accent", project.accent || "#8d88ff");
+
         if (detailMeta) {
           detailMeta.textContent = `${project.featured ? "Selected Project" : "More Work"} · ${project.meta}`;
         }
@@ -10702,7 +11179,10 @@
           `;
         }
         if (detailMedia) {
-          detailMedia.innerHTML = (project.images || []).slice(0, 1).map((src, imageIndex) => getDetailImageMarkup(project, src, imageIndex, true)).join("");
+          detailMedia.innerHTML = (project.previewImages || project.images || [])
+            .slice(0, 1)
+            .map((src, imageIndex) => getDetailImageMarkup(project, src, imageIndex, true))
+            .join("");
         }
         if (detailGallery) {
           detailGallery.innerHTML = `
@@ -10716,21 +11196,68 @@
         if (detailNextTitle) {
           detailNextTitle.textContent = nextProject.title;
         }
+
+        detailOverlay?.querySelectorAll(".detail-image-shell img").forEach((image) => {
+          if (image.complete) {
+            image.parentElement?.classList.add("is-loaded");
+          }
+        });
       };
 
       const renderProjectDetail = (index, animate = false) => {
         if (!animate || reduceMotion || !detailScroll) {
           renderProjectDetailContent(index);
           detailScroll?.scrollTo({ top: 0, behavior: "auto" });
+          updateDetailBottomHint();
           return;
         }
 
+        isDetailSwitching = true;
         detailScroll.classList.add("is-switching");
         window.setTimeout(() => {
           renderProjectDetailContent(index);
           detailScroll.scrollTo({ top: 0, behavior: "auto" });
           detailScroll.classList.remove("is-switching");
+          updateDetailBottomHint();
+          window.setTimeout(() => {
+            isDetailSwitching = false;
+          }, 260);
         }, 190);
+      };
+
+      const isDetailAtBottom = () => {
+        if (!detailScroll) {
+          return false;
+        }
+
+        return detailScroll.scrollTop + detailScroll.clientHeight >= detailScroll.scrollHeight - 8;
+      };
+
+      function updateDetailBottomHint() {
+        if (!detailScroll) {
+          return;
+        }
+
+        detailScroll.classList.toggle("is-near-bottom", isDetailAtBottom());
+      }
+
+      const goToDetailProject = (index, animate = true) => {
+        if (!allPortfolioProjects[index] || isDetailSwitching) {
+          return;
+        }
+
+        detailBottomDelta = 0;
+        renderProjectDetail(index, animate);
+      };
+
+      const goToNextDetailProject = () => {
+        const nextIndex = (activeDetailIndex + 1) % allPortfolioProjects.length;
+        goToDetailProject(nextIndex, true);
+      };
+
+      const goToPreviousDetailProject = () => {
+        const previousIndex = (activeDetailIndex - 1 + allPortfolioProjects.length) % allPortfolioProjects.length;
+        goToDetailProject(previousIndex, true);
       };
 
       const openProjectDetail = (index, trigger) => {
@@ -10738,14 +11265,17 @@
           return;
         }
 
+        window.clearTimeout(detailCloseTimer);
         lastFocusedProjectTrigger = trigger || document.activeElement;
         renderProjectDetail(index);
-        window.clearTimeout(detailCloseTimer);
+        detailBottomDelta = 0;
+        lockDetailScroll();
         detailOverlay.classList.add("is-open");
         detailOverlay.setAttribute("aria-hidden", "false");
         document.body.classList.add("body-detail-open");
-        lockDetailScroll();
-        window.setTimeout(() => detailClose?.focus(), 0);
+        window.requestAnimationFrame(() => {
+          detailClose?.focus({ preventScroll: true });
+        });
       };
 
       const closeProjectDetail = () => {
@@ -10759,7 +11289,7 @@
         window.clearTimeout(detailCloseTimer);
         detailCloseTimer = window.setTimeout(() => {
           unlockDetailScroll();
-          lastFocusedProjectTrigger?.focus?.();
+          lastFocusedProjectTrigger?.focus?.({ preventScroll: true });
         }, reduceMotion ? 0 : 520);
       };
 
@@ -10806,13 +11336,66 @@
         }
       });
       detailPrev?.addEventListener("click", () => {
-        const nextIndex = (activeDetailIndex - 1 + allPortfolioProjects.length) % allPortfolioProjects.length;
-        renderProjectDetail(nextIndex, true);
+        goToPreviousDetailProject();
       });
       detailNext?.addEventListener("click", () => {
-        const nextIndex = (activeDetailIndex + 1) % allPortfolioProjects.length;
-        renderProjectDetail(nextIndex, true);
+        goToNextDetailProject();
       });
+      detailScroll?.addEventListener(
+        "scroll",
+        () => {
+          updateDetailBottomHint();
+          if (!isDetailAtBottom()) {
+            detailBottomDelta = 0;
+          }
+        },
+        { passive: true }
+      );
+      detailScroll?.addEventListener(
+        "wheel",
+        (event) => {
+          if (!detailOverlay?.classList.contains("is-open") || isDetailSwitching || event.deltaY <= 0) {
+            return;
+          }
+
+          if (!isDetailAtBottom()) {
+            detailBottomDelta = 0;
+            return;
+          }
+
+          detailBottomDelta += event.deltaY;
+          if (detailBottomDelta > 110) {
+            event.preventDefault();
+            goToNextDetailProject();
+          }
+        },
+        { passive: false }
+      );
+      detailScroll?.addEventListener(
+        "touchstart",
+        (event) => {
+          const touch = event.touches[0];
+          detailTouchStartY = touch?.clientY || 0;
+          detailTouchLastY = detailTouchStartY;
+        },
+        { passive: true }
+      );
+      detailScroll?.addEventListener(
+        "touchmove",
+        (event) => {
+          if (!detailOverlay?.classList.contains("is-open") || isDetailSwitching || !isDetailAtBottom()) {
+            return;
+          }
+
+          const touchY = event.touches[0]?.clientY || detailTouchLastY;
+          const upwardDistance = detailTouchStartY - touchY;
+          detailTouchLastY = touchY;
+          if (upwardDistance > 58) {
+            goToNextDetailProject();
+          }
+        },
+        { passive: true }
+      );
       document.addEventListener("keydown", (event) => {
         if (!detailOverlay?.classList.contains("is-open")) {
           return;
@@ -10821,25 +11404,34 @@
         if (event.key === "Escape") {
           event.preventDefault();
           closeProjectDetail();
+          return;
         }
+
         if (event.key === "ArrowLeft") {
           event.preventDefault();
-          renderProjectDetail((activeDetailIndex - 1 + allPortfolioProjects.length) % allPortfolioProjects.length, true);
+          goToPreviousDetailProject();
+          return;
         }
+
         if (event.key === "ArrowRight") {
           event.preventDefault();
-          renderProjectDetail((activeDetailIndex + 1) % allPortfolioProjects.length, true);
+          goToNextDetailProject();
+          return;
         }
+
         if (event.key === "Tab" && detailPanel) {
           const focusable = Array.from(
-            detailPanel.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])')
-          ).filter((node) => node.offsetParent !== null);
-          if (!focusable.length) {
+            detailPanel.querySelectorAll(
+              'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
+            )
+          ).filter((element) => !element.hasAttribute("disabled") && element.getAttribute("aria-hidden") !== "true");
+          const first = focusable[0];
+          const last = focusable[focusable.length - 1];
+
+          if (!first || !last) {
             return;
           }
 
-          const first = focusable[0];
-          const last = focusable[focusable.length - 1];
           if (event.shiftKey && document.activeElement === first) {
             event.preventDefault();
             last.focus();
@@ -10874,6 +11466,19 @@
         skills: "她的核心能力是产品思维、UI/UX 设计和内容运营：先拆目标与约束，再用体验方案、产品路径和增长视角一起校准。",
         aiWorkflow: "她会把 AI 用在研究、灵感发散、竞品理解、流程梳理、原型实现和表达验证里。AI 不是替代判断，而是帮助更快验证想法。",
         contact: "如果你想进一步沟通合作、岗位或项目机会，可以通过页面里的 Contact 入口联系小白。",
+      };
+
+      const updateAssistantHeroVisibility = () => {
+        if (!assistant) {
+          return;
+        }
+
+        const heroBottom = hero?.getBoundingClientRect().bottom ?? 0;
+        const shouldShowAssistant = heroBottom < window.innerHeight * 0.28;
+        assistant.classList.toggle("is-page-visible", shouldShowAssistant);
+        if (!shouldShowAssistant && assistant.classList.contains("is-open")) {
+          closeAssistantPanel();
+        }
       };
       const assistantAnswers = [
         {
@@ -10996,6 +11601,7 @@
 
       function openAssistantPanel() {
         assistant?.classList.add("is-open");
+        assistant?.classList.add("is-page-visible");
         assistantLauncher?.setAttribute("aria-expanded", "true");
         assistantPanel?.setAttribute("aria-hidden", "false");
         window.setTimeout(() => assistantInput?.focus(), 80);
@@ -11006,6 +11612,7 @@
         assistantLauncher?.setAttribute("aria-expanded", "false");
         assistantPanel?.setAttribute("aria-hidden", "true");
         assistantLauncher?.focus?.();
+        updateAssistantHeroVisibility();
       }
 
       assistantLauncher?.addEventListener("click", openAssistantPanel);
@@ -11045,6 +11652,9 @@
         assistantQuick?.appendChild(button);
       });
       appendAssistantMessage("你好，我是小白的 AI 分身。\n我可以带你快速了解她的作品、经历、产品思维和 AI 工作方式。\n我的回答基于小白公开的作品集资料。");
+      updateAssistantHeroVisibility();
+      window.addEventListener("scroll", updateAssistantHeroVisibility, { passive: true });
+      window.addEventListener("resize", updateAssistantHeroVisibility);
 
       if (!sessionStorage.getItem("xiaobaiAssistantTipSeen")) {
         window.setTimeout(() => {
@@ -11539,14 +12149,15 @@
       const AUTOPLAY_DELAY = 5500;
       const MOBILE_AUTOPLAY_DELAY = 7000;
       const RESUME_DELAY = 6000;
+      const BEYOND_MANUAL_PAUSE_DELAY = 7000;
+      const BEYOND_HOVER_RESUME_DELAY = 1000;
       let activeBeyondIndex = 0;
       let beyondAutoplayTimer = 0;
       let beyondResumeTimer = 0;
       let beyondVisible = false;
-      let beyondDragStartX = 0;
-      let beyondDragScrollLeft = 0;
-      let beyondDragging = false;
-      let beyondWheelLocked = false;
+      let beyondTransitioning = false;
+      let beyondQueuedIndex = null;
+      let beyondTransitionTimer = 0;
 
       const getSceneFrameSrc = (sequence, index) => {
         const folder = sequence.dataset.frameDir;
@@ -11641,16 +12252,7 @@
       };
 
       const scrollBeyondToActive = () => {
-        if (!beyondTrack || !beyondScenes[activeBeyondIndex]) {
-          return;
-        }
-
-        const activeCard = beyondScenes[activeBeyondIndex].card;
-        const target = activeCard.offsetLeft - (beyondTrack.clientWidth - activeCard.offsetWidth) / 2;
-        beyondTrack.scrollTo({
-          left: Math.max(target, 0),
-          behavior: reduceMotion ? "auto" : "smooth",
-        });
+        beyondTrack?.scrollTo?.({ left: 0, behavior: "auto" });
       };
 
       const stopBeyondAutoplay = () => {
@@ -11671,11 +12273,11 @@
         }, delay);
       };
 
-      const pauseBeyondAutoplay = (resume = true) => {
+      const pauseBeyondAutoplay = (resume = true, delay = BEYOND_MANUAL_PAUSE_DELAY) => {
         stopBeyondAutoplay();
         window.clearTimeout(beyondResumeTimer);
         if (resume && beyondVisible && !reduceMotion) {
-          beyondResumeTimer = window.setTimeout(() => scheduleBeyondAutoplay(), RESUME_DELAY);
+          beyondResumeTimer = window.setTimeout(() => scheduleBeyondAutoplay(), delay);
         }
       };
 
@@ -11685,13 +12287,24 @@
         }
 
         const nextIndex = (index + beyondScenes.length) % beyondScenes.length;
+        if (beyondTransitioning && reason !== "init") {
+          beyondQueuedIndex = nextIndex;
+          if (reason !== "auto") {
+            pauseBeyondAutoplay(true, BEYOND_MANUAL_PAUSE_DELAY);
+          }
+          return;
+        }
+
         const nextScene = beyondScenes[nextIndex];
         if (reason !== "auto" && reason !== "init") {
-          pauseBeyondAutoplay(true);
+          pauseBeyondAutoplay(true, BEYOND_MANUAL_PAUSE_DELAY);
         } else {
           stopBeyondAutoplay();
         }
 
+        beyondTransitioning = reason !== "init";
+        beyondQueuedIndex = null;
+        window.clearTimeout(beyondTransitionTimer);
         activeBeyondIndex = nextIndex;
         beyondSection?.setAttribute("data-scene", nextScene.id || "content");
         beyondCount.textContent = `${nextScene.number} / ${String(beyondScenes.length).padStart(2, "0")}`;
@@ -11710,7 +12323,11 @@
           card.classList.toggle("is-next", forwardDistance === 1);
           card.classList.toggle("is-prev", backwardDistance === 1);
           card.classList.toggle("is-far", !isActive && forwardDistance !== 1 && backwardDistance !== 1);
-          card.setAttribute("aria-hidden", isActive ? "false" : "true");
+          const isPreview = forwardDistance === 1 || backwardDistance === 1;
+          card.setAttribute("aria-hidden", isActive || isPreview ? "false" : "true");
+          card.tabIndex = isPreview ? 0 : -1;
+          card.setAttribute("role", isPreview ? "button" : "article");
+          card.setAttribute("aria-label", backwardDistance === 1 ? "上一张 Scene" : forwardDistance === 1 ? "下一张 Scene" : isActive ? "当前 Scene" : "隐藏 Scene");
           resetSceneParallax(card);
           if (isActive) {
             playSceneSequence(card);
@@ -11723,60 +12340,76 @@
         if (reason === "auto") {
           scheduleBeyondAutoplay();
         }
+
+        if (beyondTransitioning) {
+          beyondTransitionTimer = window.setTimeout(() => {
+            beyondTransitioning = false;
+            if (beyondQueuedIndex !== null && beyondQueuedIndex !== activeBeyondIndex) {
+              const queuedIndex = beyondQueuedIndex;
+              beyondQueuedIndex = null;
+              setActiveBeyondScene(queuedIndex, "manual");
+            } else {
+              beyondQueuedIndex = null;
+            }
+          }, 880);
+        }
       }
-
-      const updateBeyondFromScroll = () => {
-        if (!beyondTrack || beyondDragging) {
-          return;
-        }
-
-        const center = beyondTrack.scrollLeft + beyondTrack.clientWidth / 2;
-        let closestIndex = activeBeyondIndex;
-        let closestDistance = Infinity;
-        beyondScenes.forEach((scene, index) => {
-          const cardCenter = scene.card.offsetLeft + scene.card.offsetWidth / 2;
-          const distance = Math.abs(cardCenter - center);
-          if (distance < closestDistance) {
-            closestDistance = distance;
-            closestIndex = index;
-          }
-        });
-
-        if (closestIndex !== activeBeyondIndex) {
-          setActiveBeyondScene(closestIndex, "scroll");
-        }
-      };
 
       sceneCards.forEach((card, index) => {
         const sequence = card.querySelector(".scene-sequence");
         sequence?.addEventListener("load", () => card.classList.add("is-video-ready"));
-        card.addEventListener("click", () => setActiveBeyondScene(index));
-        card.addEventListener("focusin", () => setActiveBeyondScene(index));
+        card.addEventListener("click", () => {
+          if (card.classList.contains("is-prev")) {
+            setActiveBeyondScene(activeBeyondIndex - 1);
+          } else if (card.classList.contains("is-next")) {
+            setActiveBeyondScene(activeBeyondIndex + 1);
+          }
+        });
+        card.addEventListener("keydown", (event) => {
+          if (event.key !== "Enter" && event.key !== " ") {
+            return;
+          }
+          if (!card.classList.contains("is-prev") && !card.classList.contains("is-next")) {
+            return;
+          }
+          event.preventDefault();
+          if (card.classList.contains("is-prev")) {
+            setActiveBeyondScene(activeBeyondIndex - 1);
+          } else {
+            setActiveBeyondScene(activeBeyondIndex + 1);
+          }
+        });
       });
 
-      beyondPrev?.addEventListener("click", () => setActiveBeyondScene(activeBeyondIndex - 1));
-      beyondNextControl?.addEventListener("click", () => setActiveBeyondScene(activeBeyondIndex + 1));
+      beyondPrev?.addEventListener("click", (event) => {
+        event.stopPropagation();
+        setActiveBeyondScene(activeBeyondIndex - 1);
+      });
+      beyondNextControl?.addEventListener("click", (event) => {
+        event.stopPropagation();
+        setActiveBeyondScene(activeBeyondIndex + 1);
+      });
       beyondProgressButtons.forEach((button) => {
-        button.addEventListener("click", () => setActiveBeyondScene(Number(button.dataset.beyondGoto || 0)));
+        button.addEventListener("click", (event) => {
+          event.stopPropagation();
+          setActiveBeyondScene(Number(button.dataset.beyondGoto || 0));
+        });
       });
 
       if (beyondTrack) {
+        beyondTrack.tabIndex = 0;
+        beyondTrack.setAttribute("aria-label", "Beyond Work Carousel，使用左右方向键切换");
+        beyondTrack.addEventListener("mouseenter", () => {
+          pauseBeyondAutoplay(false);
+        });
         beyondTrack.addEventListener("mouseleave", () => {
           resetSceneParallax(beyondScenes[activeBeyondIndex]?.card);
-        });
-
-        beyondTrack.addEventListener("pointerdown", (event) => {
-          beyondDragging = true;
-          beyondDragStartX = event.clientX;
-          beyondDragScrollLeft = beyondTrack.scrollLeft;
-          pauseBeyondAutoplay(false);
-          beyondTrack.classList.add("is-dragging");
-          beyondTrack.setPointerCapture?.(event.pointerId);
+          pauseBeyondAutoplay(true, BEYOND_HOVER_RESUME_DELAY);
         });
 
         beyondTrack.addEventListener("pointermove", (event) => {
           const activeCard = beyondScenes[activeBeyondIndex]?.card;
-          if (activeCard && !beyondDragging && window.innerWidth > 860) {
+          if (activeCard && window.innerWidth > 860) {
             const rect = beyondTrack.getBoundingClientRect();
             const x = (event.clientX - rect.left) / rect.width - 0.5;
             const y = (event.clientY - rect.top) / rect.height - 0.5;
@@ -11788,53 +12421,7 @@
             activeCard.querySelector(".scene-visual")?.style.setProperty("--visual-parallax-x", `${(x * 7).toFixed(2)}px`);
             activeCard.querySelector(".scene-visual")?.style.setProperty("--visual-parallax-y", `${(y * 5).toFixed(2)}px`);
           }
-
-          if (beyondDragging) {
-            beyondTrack.scrollLeft = beyondDragScrollLeft - (event.clientX - beyondDragStartX);
-          }
         });
-
-        const stopDrag = (event) => {
-          if (!beyondDragging) {
-            return;
-          }
-
-          const deltaX = event.clientX - beyondDragStartX;
-          beyondDragging = false;
-          beyondTrack.classList.remove("is-dragging");
-          beyondTrack.releasePointerCapture?.(event.pointerId);
-          if (Math.abs(deltaX) > 46) {
-            setActiveBeyondScene(activeBeyondIndex + (deltaX < 0 ? 1 : -1));
-          } else {
-            updateBeyondFromScroll();
-            pauseBeyondAutoplay(true);
-          }
-        };
-
-        beyondTrack.addEventListener("pointerup", stopDrag);
-        beyondTrack.addEventListener("pointercancel", stopDrag);
-        beyondTrack.addEventListener("scroll", () => {
-          window.clearTimeout(beyondTrack._scrollTimer);
-          beyondTrack._scrollTimer = window.setTimeout(updateBeyondFromScroll, 120);
-        });
-        beyondTrack.addEventListener(
-          "wheel",
-          (event) => {
-            if (Math.abs(event.deltaX) <= Math.abs(event.deltaY) || Math.abs(event.deltaX) < 18) {
-              return;
-            }
-            if (beyondWheelLocked) {
-              return;
-            }
-
-            beyondWheelLocked = true;
-            setActiveBeyondScene(activeBeyondIndex + (event.deltaX > 0 ? 1 : -1));
-            window.setTimeout(() => {
-              beyondWheelLocked = false;
-            }, 680);
-          },
-          { passive: true }
-        );
       }
 
       beyondSection?.addEventListener("keydown", (event) => {
@@ -11852,9 +12439,13 @@
         if (document.hidden) {
           stopProjectAutoplay();
           stopBeyondAutoplay();
+          sceneCards.forEach((card) => stopSceneSequence(card, card !== beyondScenes[activeBeyondIndex]?.card));
         } else {
           scheduleProjectAutoplay(2500);
           scheduleBeyondAutoplay(RESUME_DELAY);
+          if (beyondVisible) {
+            playSceneSequence(beyondScenes[activeBeyondIndex]?.card);
+          }
         }
       });
 
@@ -11878,9 +12469,10 @@
               }
             } else {
               stopBeyondAutoplay();
+              sceneCards.forEach((card) => stopSceneSequence(card, card !== beyondScenes[activeBeyondIndex]?.card));
             }
           },
-          { threshold: 0.22 }
+          { rootMargin: "200px 0px 200px 0px", threshold: 0.1 }
         );
         beyondObserver.observe(beyondSection);
       }
