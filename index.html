@@ -9247,8 +9247,8 @@
 
     <main class="hero" id="start" aria-label="Bai Qingxin personal homepage hero">
       <div class="hero-reveal" aria-hidden="true">
-        <img class="hero-reveal-before" src="assets/bai-qingxin/hero-transform-before.png" alt="" />
-        <img class="hero-reveal-after" src="assets/bai-qingxin/hero-transform-after.png" alt="" />
+        <img class="hero-reveal-before" src="assets/bai-qingxin/hero-transform-before-1920.jpg" alt="" width="1920" height="1352" fetchpriority="high" decoding="async" />
+        <img class="hero-reveal-after" src="assets/bai-qingxin/hero-transform-after-1920.jpg" alt="" width="1920" height="1352" fetchpriority="high" decoding="async" />
       </div>
       <section class="hero-stage">
         <div class="hero-copy-block">
@@ -9300,7 +9300,7 @@
 
         <div class="about-visual" aria-label="人物档案标签互动区域">
           <figure class="profile-photo-wrap" data-depth="0.5">
-            <img class="profile-photo" src="assets/bai-qingxin/about-profile-new.png" alt="Bai Qingxin holding a laptop and pen" />
+            <img class="profile-photo" src="assets/bai-qingxin/about-profile-new-760.png" alt="Bai Qingxin holding a laptop and pen" width="693" height="760" loading="lazy" decoding="async" />
           </figure>
 
           <article class="profile-card core" data-profile-card data-mode="Turning ideas into something real" data-depth="1" data-orbit="a" tabindex="0">
@@ -9667,11 +9667,6 @@
                 <span>费曼学习法</span>
               </div>
             </div>
-            <div class="scene-assets asset-content" aria-label="内容创作辅助素材">
-              <span class="mini-asset front" data-note="ACCOUNT HOME"></span>
-              <span class="mini-asset back" data-note="POST SNAPSHOT"></span>
-              <span class="mini-asset mid" data-note="2W+ FOLLOWERS"></span>
-            </div>
             <figure class="scene-visual">
               <img
                 class="scene-video scene-sequence"
@@ -9696,11 +9691,6 @@
                 <span>长期主义</span>
               </div>
             </div>
-            <div class="scene-assets asset-pilates" aria-label="普拉提辅助素材">
-              <span class="mini-asset front" data-note="STRETCH FLOW"></span>
-              <span class="mini-asset back" data-note="TRAINING LOG"></span>
-              <span class="mini-asset mid" data-note="REFORMER CLASS"></span>
-            </div>
             <figure class="scene-visual">
               <img
                 class="scene-video scene-sequence"
@@ -9724,11 +9714,6 @@
                 <span>力量训练</span>
                 <span>执行力</span>
               </div>
-            </div>
-            <div class="scene-assets asset-training" aria-label="健身训练辅助素材">
-              <span class="mini-asset front" data-note="CERTIFICATE"></span>
-              <span class="mini-asset back" data-note="BARBELL DETAIL"></span>
-              <span class="mini-asset mid" data-note="TRAINING LOG"></span>
             </div>
             <figure class="scene-visual">
               <img
@@ -10182,14 +10167,37 @@
       let animationFrameId = 0;
       let frameIndex = 0;
       let lastFrameTime = 0;
+      const preloadedCharacterStates = new Set();
 
-      const preloadFrames = () => {
-        Object.values(characterStates).forEach((state) => {
-          state.frames.forEach((src) => {
+      const preloadImagesInBatches = (sources, batchSize = 10) => {
+        let cursor = 0;
+        const runBatch = () => {
+          const slice = sources.slice(cursor, cursor + batchSize);
+          slice.forEach((src) => {
             const img = new Image();
+            img.decoding = "async";
             img.src = src;
           });
-        });
+          cursor += batchSize;
+          if (cursor < sources.length) {
+            if ("requestIdleCallback" in window) {
+              window.requestIdleCallback(runBatch, { timeout: 1200 });
+            } else {
+              window.setTimeout(runBatch, 80);
+            }
+          }
+        };
+        runBatch();
+      };
+
+      const preloadCharacterState = (stateName, initialCount = 16) => {
+        const state = characterStates[stateName] || characterStates.default;
+        if (!state?.frames?.length || preloadedCharacterStates.has(stateName)) {
+          return;
+        }
+        preloadedCharacterStates.add(stateName);
+        preloadImagesInBatches(state.frames.slice(1, initialCount), 8);
+        window.setTimeout(() => preloadImagesInBatches(state.frames.slice(initialCount), 12), 900);
       };
 
       const stopCharacterAnimation = () => {
@@ -10204,6 +10212,7 @@
         activeAbility = stateName;
         abilityMood.textContent = state.mood;
         stopCharacterAnimation();
+        preloadCharacterState(stateName);
 
         frameIndex = 0;
         lastFrameTime = 0;
@@ -10224,9 +10233,13 @@
             lastFrameTime = time;
 
             if (frameIndex >= state.frames.length) {
-              abilityFrame.src = state.frames[state.frames.length - 1];
-              animationFrameId = 0;
-              return;
+              if (activeAbility === stateName) {
+                frameIndex = 0;
+              } else {
+                abilityFrame.src = state.frames[state.frames.length - 1];
+                animationFrameId = 0;
+                return;
+              }
             }
 
             abilityFrame.src = state.frames[frameIndex];
@@ -10262,6 +10275,20 @@
           setActiveAbility("default");
         }
       });
+
+      if (abilityStage && "IntersectionObserver" in window) {
+        const abilityObserver = new IntersectionObserver(
+          ([entry]) => {
+            if (entry.isIntersecting) {
+              preloadCharacterState("default", 24);
+              playCharacterState("default");
+              abilityObserver.disconnect();
+            }
+          },
+          { rootMargin: "180px 0px", threshold: 0.12 }
+        );
+        abilityObserver.observe(abilityStage);
+      }
 
       const makeFeaturedProjectPages = (folder, count, extension = "webp") =>
         Array.from({ length: count }, (_, index) => `assets/projects/featured/${folder}/page-${String(index + 1).padStart(2, "0")}.${extension}`);
@@ -11534,10 +11561,9 @@
 
         preloadedScenes.add(folder);
         const count = Number(sequence.dataset.frameCount || 1);
-        for (let index = 1; index < count; index += 1) {
-          const img = new Image();
-          img.src = getSceneFrameSrc(sequence, index);
-        }
+        const frameSources = Array.from({ length: Math.max(count - 1, 0) }, (_, index) => getSceneFrameSrc(sequence, index + 1));
+        preloadImagesInBatches(frameSources.slice(0, 14), 7);
+        window.setTimeout(() => preloadImagesInBatches(frameSources.slice(14), 10), 900);
       };
 
       const stopSceneSequence = (card, reset = true) => {
@@ -11596,9 +11622,13 @@
             lastFrameTime = time;
 
             if (frameIndex >= count) {
-              sequence.src = getSceneFrameSrc(sequence, count - 1);
-              sceneAnimationFrames.delete(card);
-              return;
+              if (card.classList.contains("is-active")) {
+                frameIndex = 0;
+              } else {
+                sequence.src = getSceneFrameSrc(sequence, count - 1);
+                sceneAnimationFrames.delete(card);
+                return;
+              }
             }
 
             sequence.src = getSceneFrameSrc(sequence, frameIndex);
@@ -11837,8 +11867,9 @@
         const beyondObserver = new IntersectionObserver(
           ([entry]) => {
             beyondVisible = entry.isIntersecting;
-            if (entry.isIntersecting) {
+          if (entry.isIntersecting) {
               beyondSection.classList.add("is-visible");
+              playSceneSequence(beyondScenes[activeBeyondIndex]?.card);
               if (!beyondHasEntered) {
                 beyondHasEntered = true;
                 window.setTimeout(() => scheduleBeyondAutoplay(), 1200);
@@ -11854,8 +11885,7 @@
         beyondObserver.observe(beyondSection);
       }
 
-      preloadFrames();
-      playCharacterState("default");
+      preloadCharacterState("default", 8);
     </script>
   </body>
 </html>
