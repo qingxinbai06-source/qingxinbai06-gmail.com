@@ -11388,6 +11388,165 @@
         margin-top: clamp(22px, 2.6vh, 30px);
       }
 
+      /* Beyond shared safe layout: one internal system for all four active cards. */
+      .beyond .scene-card,
+      .beyond .scene-card.photography {
+        --beyond-card-pad-x: clamp(38px, 4.2vw, 56px);
+        --beyond-card-pad-top: clamp(26px, 2.8vw, 34px);
+        --beyond-card-pad-bottom: clamp(26px, 2.8vw, 34px);
+        grid-template-columns: minmax(340px, 51%) minmax(0, 49%) !important;
+        grid-template-rows: minmax(0, 1fr) !important;
+        align-content: center !important;
+        column-gap: clamp(26px, 3.4vw, 46px) !important;
+        height: clamp(464px, 46vh, 520px) !important;
+        padding: var(--beyond-card-pad-top) var(--beyond-card-pad-x) var(--beyond-card-pad-bottom) !important;
+        align-items: center !important;
+      }
+
+      .beyond .scene-card .scene-content,
+      .beyond .scene-card.content .scene-content,
+      .beyond .scene-card.pilates .scene-content,
+      .beyond .scene-card.training .scene-content,
+      .beyond .scene-card.photography .scene-content {
+        grid-column: 1 !important;
+        grid-row: 1 !important;
+        align-self: center !important;
+        display: flex !important;
+        flex-direction: column !important;
+        max-width: 500px !important;
+      }
+
+      .beyond .scene-card .scene-index {
+        margin-bottom: clamp(12px, 1.25vw, 16px) !important;
+      }
+
+      .beyond .scene-card h3 {
+        font-size: clamp(30px, 2.55vw, 38px) !important;
+        line-height: 1.08 !important;
+      }
+
+      .beyond .scene-card .scene-claim {
+        margin-top: clamp(18px, 1.8vw, 22px) !important;
+        font-size: clamp(14px, 1vw, 16px) !important;
+      }
+
+      .beyond .scene-card .scene-copy {
+        margin-top: clamp(14px, 1.4vw, 18px) !important;
+        max-width: 470px !important;
+        font-size: clamp(12px, 0.82vw, 13px) !important;
+        line-height: 1.5 !important;
+      }
+
+      .beyond .scene-card .scene-tags {
+        margin-top: clamp(20px, 1.9vw, 23px) !important;
+      }
+
+      .beyond .scene-assets,
+      .beyond .asset-content,
+      .beyond .asset-pilates,
+      .beyond .asset-training,
+      .beyond .asset-photo,
+      .beyond .scene-card.content .asset-content,
+      .beyond .scene-card.pilates .asset-pilates,
+      .beyond .scene-card.training .asset-training,
+      .beyond .scene-card.photography .asset-photo {
+        grid-column: auto !important;
+        grid-row: auto !important;
+        align-self: start !important;
+        justify-self: start !important;
+        width: min(100%, 330px) !important;
+        max-width: 330px !important;
+        margin: clamp(22px, 1.9vw, 24px) 0 0 !important;
+        gap: clamp(10px, 1.1vw, 13px) !important;
+        overflow: visible !important;
+      }
+
+      .beyond .scene-card.photography .asset-photo {
+        width: min(100%, 360px) !important;
+        max-width: 360px !important;
+      }
+
+      .beyond .mini-asset,
+      .beyond .asset-content .mini-asset:nth-child(1),
+      .beyond .asset-content .mini-asset:nth-child(2),
+      .beyond .asset-content .mini-asset:nth-child(3),
+      .beyond .asset-pilates .mini-asset:nth-child(1),
+      .beyond .asset-pilates .mini-asset:nth-child(2),
+      .beyond .asset-pilates .mini-asset:nth-child(3),
+      .beyond .asset-training .mini-asset:nth-child(1),
+      .beyond .asset-training .mini-asset:nth-child(2),
+      .beyond .asset-training .mini-asset:nth-child(3),
+      .beyond .asset-photo .mini-asset,
+      .beyond .asset-photo .mini-asset:nth-child(1),
+      .beyond .asset-photo .mini-asset:nth-child(2),
+      .beyond .asset-photo .mini-asset:nth-child(3) {
+        flex: 0 0 clamp(88px, 6.8vw, 102px) !important;
+        width: clamp(88px, 6.8vw, 102px) !important;
+        padding: 5px 5px 7px !important;
+        border-radius: 12px !important;
+        overflow: hidden !important;
+      }
+
+      .beyond .scene-card.photography .asset-photo .mini-asset {
+        flex-basis: clamp(96px, 7.6vw, 112px) !important;
+        width: clamp(96px, 7.6vw, 112px) !important;
+      }
+
+      .beyond .mini-asset img,
+      .beyond .asset-content .mini-asset img,
+      .beyond .asset-pilates .mini-asset img,
+      .beyond .asset-training .mini-asset img,
+      .beyond .asset-photo .mini-asset img,
+      .beyond .scene-card.photography .asset-photo .mini-asset img {
+        height: clamp(54px, 4.4vw, 66px) !important;
+        object-fit: contain !important;
+        object-position: center !important;
+      }
+
+      .beyond .scene-card.photography .asset-photo .mini-asset img {
+        height: clamp(62px, 5.1vw, 74px) !important;
+      }
+
+      .beyond .mini-asset figcaption {
+        margin-top: 6px !important;
+        font-size: 10px !important;
+        line-height: 1 !important;
+      }
+
+      .beyond .scene-card .scene-visual,
+      .beyond .scene-card.content .scene-visual,
+      .beyond .scene-card.pilates .scene-visual,
+      .beyond .scene-card.training .scene-visual,
+      .beyond .scene-card.photography .scene-visual {
+        grid-column: 2 !important;
+        grid-row: 1 !important;
+        align-self: center !important;
+        justify-self: center !important;
+        width: min(108%, 472px) !important;
+        height: min(90%, 502px) !important;
+        min-height: 340px !important;
+        transform: translate3d(calc(var(--visual-parallax-x, 0px) - 24px), calc(var(--visual-parallax-y, 0px) - 12px), 0) !important;
+      }
+
+      .beyond .scene-card.content .scene-visual {
+        width: min(110%, 490px) !important;
+        height: min(92%, 516px) !important;
+        transform: translate3d(calc(var(--visual-parallax-x, 0px) - 28px), calc(var(--visual-parallax-y, 0px) - 12px), 0) !important;
+      }
+
+      .beyond .scene-card.pilates .scene-visual,
+      .beyond .scene-card.training .scene-visual {
+        width: min(106%, 456px) !important;
+        height: min(88%, 492px) !important;
+        transform: translate3d(calc(var(--visual-parallax-x, 0px) - 24px), calc(var(--visual-parallax-y, 0px) - 14px), 0) !important;
+      }
+
+      .beyond .scene-card.photography .scene-visual {
+        width: min(100%, 424px) !important;
+        height: min(86%, 472px) !important;
+        transform: translate3d(calc(var(--visual-parallax-x, 0px) - 22px), calc(var(--visual-parallax-y, 0px) - 12px), 0) !important;
+      }
+
     </style>
   </head>
   <body>
@@ -11817,20 +11976,20 @@
                 <span>AI 学习</span>
                 <span>费曼学习法</span>
               </div>
-            </div>
-            <div class="scene-assets asset-content" aria-label="内容创作真实素材">
-              <figure class="mini-asset front">
-                <img src="assets/bai-qingxin/beyond/photos/content-01.jpg" alt="AI工具合集内容截图" loading="lazy" />
-                <figcaption>内容截图</figcaption>
-              </figure>
-              <figure class="mini-asset mid">
-                <img src="assets/bai-qingxin/beyond/photos/content-02.jpg" alt="Figma效率内容截图" loading="lazy" />
-                <figcaption>效率笔记</figcaption>
-              </figure>
-              <figure class="mini-asset back">
-                <img src="assets/bai-qingxin/beyond/photos/content-03.jpg" alt="设计师成长内容截图" loading="lazy" />
-                <figcaption>成长方法</figcaption>
-              </figure>
+              <div class="scene-assets asset-content" aria-label="内容创作真实素材">
+                <figure class="mini-asset front">
+                  <img src="assets/bai-qingxin/beyond/photos/content-01.jpg" alt="AI工具合集内容截图" loading="lazy" />
+                  <figcaption>内容截图</figcaption>
+                </figure>
+                <figure class="mini-asset mid">
+                  <img src="assets/bai-qingxin/beyond/photos/content-02.jpg" alt="Figma效率内容截图" loading="lazy" />
+                  <figcaption>效率笔记</figcaption>
+                </figure>
+                <figure class="mini-asset back">
+                  <img src="assets/bai-qingxin/beyond/photos/content-03.jpg" alt="设计师成长内容截图" loading="lazy" />
+                  <figcaption>成长方法</figcaption>
+                </figure>
+              </div>
             </div>
             <figure class="scene-visual">
               <img
@@ -11855,20 +12014,20 @@
                 <span>状态管理</span>
                 <span>长期主义</span>
               </div>
-            </div>
-            <div class="scene-assets asset-pilates" aria-label="普拉提训练真实素材">
-              <figure class="mini-asset front">
-                <img src="assets/bai-qingxin/beyond/photos/pilates-01.jpg" alt="普拉提训练动作照片" loading="lazy" />
-                <figcaption>拉伸训练</figcaption>
-              </figure>
-              <figure class="mini-asset mid">
-                <img src="assets/bai-qingxin/beyond/photos/pilates-02.jpg" alt="普拉提倒挂伸展照片" loading="lazy" />
-                <figcaption>普拉提练习</figcaption>
-              </figure>
-              <figure class="mini-asset back">
-                <img src="assets/bai-qingxin/beyond/photos/pilates-03.jpg" alt="普拉提教练证书照片" loading="lazy" />
-                <figcaption>专业认证</figcaption>
-              </figure>
+              <div class="scene-assets asset-pilates" aria-label="普拉提训练真实素材">
+                <figure class="mini-asset front">
+                  <img src="assets/bai-qingxin/beyond/photos/pilates-01.jpg" alt="普拉提训练动作照片" loading="lazy" />
+                  <figcaption>拉伸训练</figcaption>
+                </figure>
+                <figure class="mini-asset mid">
+                  <img src="assets/bai-qingxin/beyond/photos/pilates-02.jpg" alt="普拉提倒挂伸展照片" loading="lazy" />
+                  <figcaption>普拉提练习</figcaption>
+                </figure>
+                <figure class="mini-asset back">
+                  <img src="assets/bai-qingxin/beyond/photos/pilates-03.jpg" alt="普拉提教练证书照片" loading="lazy" />
+                  <figcaption>专业认证</figcaption>
+                </figure>
+              </div>
             </div>
             <figure class="scene-visual">
               <img
@@ -11893,20 +12052,20 @@
                 <span>力量训练</span>
                 <span>执行力</span>
               </div>
-            </div>
-            <div class="scene-assets asset-training" aria-label="健身训练真实素材">
-              <figure class="mini-asset front">
-                <img src="assets/bai-qingxin/beyond/photos/training-01.jpg" alt="健身房训练记录照片" loading="lazy" />
-                <figcaption>日常训练</figcaption>
-              </figure>
-              <figure class="mini-asset mid">
-                <img src="assets/bai-qingxin/beyond/photos/training-02.jpg" alt="健身训练自拍照片" loading="lazy" />
-                <figcaption>学习充电</figcaption>
-              </figure>
-              <figure class="mini-asset back">
-                <img src="assets/bai-qingxin/beyond/photos/training-03.jpg" alt="健身教练证书照片" loading="lazy" />
-                <figcaption>专业认证</figcaption>
-              </figure>
+              <div class="scene-assets asset-training" aria-label="健身训练真实素材">
+                <figure class="mini-asset front">
+                  <img src="assets/bai-qingxin/beyond/photos/training-01.jpg" alt="健身房训练记录照片" loading="lazy" />
+                  <figcaption>日常训练</figcaption>
+                </figure>
+                <figure class="mini-asset mid">
+                  <img src="assets/bai-qingxin/beyond/photos/training-02.jpg" alt="健身训练自拍照片" loading="lazy" />
+                  <figcaption>学习充电</figcaption>
+                </figure>
+                <figure class="mini-asset back">
+                  <img src="assets/bai-qingxin/beyond/photos/training-03.jpg" alt="健身教练证书照片" loading="lazy" />
+                  <figcaption>专业认证</figcaption>
+                </figure>
+              </div>
             </div>
             <figure class="scene-visual">
               <img
@@ -11931,17 +12090,17 @@
                 <span>构图</span>
                 <span>光影观察</span>
               </div>
-            </div>
-            <div class="scene-assets asset-photo" aria-label="摄影作品辅助素材">
-              <figure class="mini-asset front">
-                <img src="assets/bai-qingxin/beyond/photos/photography-01.jpg" alt="湖边人像摄影作品" loading="lazy" />
-              </figure>
-              <figure class="mini-asset mid">
-                <img src="assets/bai-qingxin/beyond/photos/photography-02.jpg" alt="庭院人像摄影作品" loading="lazy" />
-              </figure>
-              <figure class="mini-asset back">
-                <img src="assets/bai-qingxin/beyond/photos/photography-03.jpg" alt="雪地人像摄影作品" loading="lazy" />
-              </figure>
+              <div class="scene-assets asset-photo" aria-label="摄影作品辅助素材">
+                <figure class="mini-asset front">
+                  <img src="assets/bai-qingxin/beyond/photos/photography-01.jpg" alt="湖边人像摄影作品" loading="lazy" />
+                </figure>
+                <figure class="mini-asset mid">
+                  <img src="assets/bai-qingxin/beyond/photos/photography-02.jpg" alt="庭院人像摄影作品" loading="lazy" />
+                </figure>
+                <figure class="mini-asset back">
+                  <img src="assets/bai-qingxin/beyond/photos/photography-03.jpg" alt="雪地人像摄影作品" loading="lazy" />
+                </figure>
+              </div>
             </div>
             <figure class="scene-visual">
               <img
