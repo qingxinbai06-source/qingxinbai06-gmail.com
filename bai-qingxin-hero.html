@@ -14032,7 +14032,10 @@
       const beyondCount = document.querySelector("[data-beyond-count]");
       const beyondProgressButtons = document.querySelectorAll("[data-beyond-goto]");
       const sceneAnimationFrames = new Map();
+      const scenePlayTokens = new Map();
+      const sceneFrameCache = new Map();
       const preloadedScenes = new Set();
+      const primedScenes = new Map();
       const beyondScenes = Array.from(sceneCards).map((card, index) => ({
         card,
         id: card.dataset.sceneId,
@@ -14056,17 +14059,71 @@
         return `${folder}/frame_${String(index).padStart(5, "0")}.webp`;
       };
 
-      const preloadSceneFrames = (sequence) => {
-        const folder = sequence.dataset.frameDir;
-        if (!folder || preloadedScenes.has(folder)) {
-          return;
+      const runWhenIdle = (callback, timeout = 1200) => {
+        if ("requestIdleCallback" in window) {
+          window.requestIdleCallback(callback, { timeout });
+        } else {
+          window.setTimeout(callback, 80);
+        }
+      };
+
+      const preloadSceneFrame = (src) => {
+        if (sceneFrameCache.has(src)) {
+          return sceneFrameCache.get(src);
         }
 
-        preloadedScenes.add(folder);
+        const promise = new Promise((resolve) => {
+          const img = new Image();
+          img.decoding = "async";
+          img.onload = () => {
+            if (img.decode) {
+              img.decode().catch(() => undefined).finally(() => resolve(src));
+            } else {
+              resolve(src);
+            }
+          };
+          img.onerror = () => resolve(src);
+          img.src = src;
+        });
+        sceneFrameCache.set(src, promise);
+        return promise;
+      };
+
+      const preloadSceneFramesInBatches = (sources, batchSize = 10) => {
+        let cursor = 0;
+        const runBatch = () => {
+          sources.slice(cursor, cursor + batchSize).forEach(preloadSceneFrame);
+          cursor += batchSize;
+          if (cursor < sources.length) {
+            runWhenIdle(runBatch);
+          }
+        };
+        runBatch();
+      };
+
+      const preloadSceneFrames = (sequence, primeCount = 18) => {
+        const folder = sequence.dataset.frameDir;
+        if (!folder) {
+          return Promise.resolve();
+        }
+
+        if (primedScenes.has(folder)) {
+          return primedScenes.get(folder);
+        }
+
         const count = Number(sequence.dataset.frameCount || 1);
-        const frameSources = Array.from({ length: Math.max(count - 1, 0) }, (_, index) => getSceneFrameSrc(sequence, index + 1));
-        preloadImagesInBatches(frameSources.slice(0, 14), 7);
-        window.setTimeout(() => preloadImagesInBatches(frameSources.slice(14), 10), 900);
+        const frameSources = Array.from({ length: Math.max(count, 0) }, (_, index) => getSceneFrameSrc(sequence, index));
+        const primeSources = frameSources.slice(0, Math.min(primeCount, frameSources.length));
+        const restSources = frameSources.slice(primeSources.length);
+        const primePromise = Promise.all(primeSources.map(preloadSceneFrame));
+        primedScenes.set(folder, primePromise);
+
+        if (!preloadedScenes.has(folder)) {
+          preloadedScenes.add(folder);
+          primePromise.finally(() => runWhenIdle(() => preloadSceneFramesInBatches(restSources, 12), 900));
+        }
+
+        return primePromise;
       };
 
       const stopSceneSequence = (card, reset = true) => {
@@ -14075,6 +14132,7 @@
           cancelAnimationFrame(frameId);
           sceneAnimationFrames.delete(card);
         }
+        scenePlayTokens.delete(card);
 
         const sequence = card.querySelector(".scene-sequence");
         if (reset && sequence) {
@@ -14095,14 +14153,23 @@
         });
       };
 
-      const playSceneSequence = (card) => {
+      const primeAdjacentBeyondScene = (index) => {
+        const nextScene = beyondScenes[(index + 1) % beyondScenes.length];
+        const nextSequence = nextScene?.card?.querySelector(".scene-sequence");
+        if (nextSequence) {
+          runWhenIdle(() => preloadSceneFrames(nextSequence, 12), 900);
+        }
+      };
+
+      const playSceneSequence = async (card) => {
         const sequence = card.querySelector(".scene-sequence");
         if (!sequence) {
           return;
         }
 
         stopSceneSequence(card, false);
-        preloadSceneFrames(sequence);
+        const playToken = Symbol("scene-play");
+        scenePlayTokens.set(card, playToken);
 
         const count = Number(sequence.dataset.frameCount || 1);
         const fps = Number(sequence.dataset.frameFps || 12);
@@ -14111,11 +14178,25 @@
           return;
         }
 
+        sequence.src = getSceneFrameSrc(sequence, 0);
+        await Promise.race([
+          preloadSceneFrames(sequence, window.innerWidth <= 860 ? 10 : 18),
+          new Promise((resolve) => window.setTimeout(resolve, window.innerWidth <= 860 ? 350 : 650)),
+        ]);
+
+        if (scenePlayTokens.get(card) !== playToken || !card.classList.contains("is-active")) {
+          return;
+        }
+
         let frameIndex = 0;
         let lastFrameTime = 0;
-        sequence.src = getSceneFrameSrc(sequence, 0);
 
         const step = (time) => {
+          if (scenePlayTokens.get(card) !== playToken) {
+            sceneAnimationFrames.delete(card);
+            return;
+          }
+
           if (!lastFrameTime) {
             lastFrameTime = time;
           }
@@ -14227,6 +14308,7 @@
             stopSceneSequence(card);
           }
         });
+        primeAdjacentBeyondScene(nextIndex);
 
         scrollBeyondToActive();
         if (reason === "auto") {
