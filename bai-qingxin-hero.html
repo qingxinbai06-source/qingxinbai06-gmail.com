@@ -11598,7 +11598,7 @@
       .hero-copy-block {
         left: clamp(48px, 6.2vw, 100px);
         top: clamp(126px, 20vh, 166px);
-        width: min(920px, 54vw);
+        width: min(860px, 48vw);
       }
 
       .hero-kicker {
@@ -11645,13 +11645,142 @@
         line-height: 1.45;
       }
 
+      .hero-title em {
+        display: inline-block;
+        font-style: normal;
+        background: linear-gradient(90deg, #9b7bff 0%, #6c8fff 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        filter: saturate(0.82);
+      }
+
+      .hero-meta-line {
+        margin: clamp(18px, 2vw, 22px) 0 0;
+        color: rgba(112, 120, 170, 0.62);
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.14em;
+        line-height: 1.4;
+        text-transform: uppercase;
+      }
+
+      .hero-actions {
+        display: flex;
+        align-items: center;
+        gap: clamp(16px, 1.6vw, 20px);
+        margin-top: clamp(32px, 3.4vw, 38px);
+      }
+
+      .hero-action {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        height: 52px;
+        padding: 0 clamp(26px, 2.2vw, 32px);
+        border-radius: 999px;
+        font-size: clamp(15px, 1vw, 16px);
+        font-weight: 500;
+        line-height: 1;
+        text-decoration: none;
+        transition: transform 220ms ease, background 220ms ease, border-color 220ms ease, color 220ms ease;
+      }
+
+      .hero-action-primary {
+        background: #111827;
+        color: #ffffff;
+      }
+
+      .hero-action-secondary {
+        color: #3f4b7a;
+        background: rgba(255, 255, 255, 0.28);
+        border: 1px solid rgba(106, 118, 180, 0.18);
+      }
+
+      .hero-action:hover,
+      .hero-action:focus-visible {
+        transform: translateY(-2px);
+      }
+
+      .hero-action-primary:hover,
+      .hero-action-primary:focus-visible {
+        background: #182033;
+      }
+
+      .hero-action-secondary:hover,
+      .hero-action-secondary:focus-visible {
+        background: rgba(255, 255, 255, 0.55);
+        border-color: rgba(106, 118, 180, 0.28);
+      }
+
+      .hero-side-copy {
+        position: absolute;
+        top: clamp(136px, 18vh, 190px);
+        right: clamp(100px, 10vw, 180px);
+        z-index: 4;
+        margin: 0;
+        color: rgba(99, 109, 166, 0.58);
+        font-size: clamp(10px, 0.8vw, 12px);
+        font-weight: 500;
+        letter-spacing: 0.12em;
+        line-height: 1.7;
+        text-transform: uppercase;
+      }
+
+      .hero-scroll {
+        position: absolute;
+        left: clamp(48px, 6.2vw, 100px);
+        bottom: clamp(48px, 6vh, 64px);
+        z-index: 4;
+        display: inline-flex;
+        align-items: center;
+        gap: 16px;
+        color: rgba(93, 108, 165, 0.55);
+        font-size: 10px;
+        font-weight: 520;
+        letter-spacing: 0.14em;
+        line-height: 1.45;
+        text-decoration: none;
+        text-transform: uppercase;
+      }
+
+      .hero-scroll-icon {
+        position: relative;
+        width: 24px;
+        height: 34px;
+        border: 1px solid rgba(93, 108, 165, 0.44);
+        border-radius: 999px;
+      }
+
+      .hero-scroll-icon::before {
+        content: "";
+        position: absolute;
+        top: 8px;
+        left: 50%;
+        width: 3px;
+        height: 7px;
+        border-radius: 999px;
+        background: rgba(93, 108, 165, 0.48);
+        transform: translateX(-50%);
+      }
+
+      .contact {
+        min-width: 132px;
+        height: 40px;
+        padding: 0 22px;
+        font-size: 12px;
+        font-weight: 540;
+        letter-spacing: 0.04em;
+      }
+
       .hero-status {
         display: none !important;
       }
 
       @media (min-width: 1600px) {
         .hero-copy-block {
-          width: min(960px, 52vw);
+          width: min(900px, 48vw);
         }
 
         .hero-reveal img {
@@ -11666,6 +11795,10 @@
 
         .hero-title {
           font-size: clamp(48px, 6.7vw, 64px);
+        }
+
+        .hero-side-copy {
+          display: none;
         }
       }
 
@@ -11696,6 +11829,29 @@
           font-size: 14px;
         }
 
+        .hero-meta-line {
+          font-size: 10px;
+          letter-spacing: 0.11em;
+        }
+
+        .hero-actions {
+          align-items: stretch;
+          flex-direction: column;
+          width: min(100%, 320px);
+          margin-top: 28px;
+        }
+
+        .hero-action {
+          width: 100%;
+          height: 48px;
+          padding: 0 22px;
+          font-size: 14px;
+        }
+
+        .hero-scroll {
+          display: none;
+        }
+
         .hero-reveal img {
           inset: -6%;
           width: 112%;
@@ -11721,7 +11877,7 @@
           <a href="#beyond">BEYOND</a>
           <a href="#contact">CONTACT</a>
         </div>
-        <a class="contact" href="#start">开始探索</a>
+        <a class="contact" href="#contact">LET'S TALK ↗</a>
       </div>
     </nav>
 
@@ -11733,16 +11889,25 @@
       <section class="hero-stage">
         <div class="hero-copy-block">
           <p class="hero-kicker">01 / HELLO</p>
-          <h1 class="hero-title"><span>Turning fuzzy ideas</span><span>into real products.</span></h1>
-          <p class="role">白清馨 · AI Native 复合体验设计师</p>
+          <h1 class="hero-title"><span>Turning fuzzy ideas</span><span>into <em>real products.</em></span></h1>
+          <p class="role">AI Native 复合体验设计师</p>
           <p class="hero-copy">
             Product Thinking × UX/UI × AI Experience
           </p>
+          <p class="hero-meta-line">0 → 1 PRODUCT · AI EXPERIENCE · VIBE CODING</p>
+          <div class="hero-actions" aria-label="Hero actions">
+            <a class="hero-action hero-action-primary" href="#work">View Selected Work <span>→</span></a>
+            <a class="hero-action hero-action-secondary" href="#contact" data-hero-resume><span aria-hidden="true">↓</span> Download Resume</a>
+          </div>
         </div>
+        <p class="hero-side-copy" aria-hidden="true">MORE<br />POSSIBILITIES<br />WITH AI.</p>
 
         <span class="ground" aria-hidden="true"></span>
         <span class="noise" aria-hidden="true"></span>
-        <a class="scroll-cue" href="#about">About</a>
+        <a class="hero-scroll" href="#about" aria-label="Scroll to About section">
+          <span class="hero-scroll-icon" aria-hidden="true"></span>
+          <span>SCROLL<br />TO EXPLORE</span>
+        </a>
       </section>
     </main>
 
@@ -12840,7 +13005,7 @@
           tags: ["AI工作流", "MVP验证", "快速原型"],
           value: "在不确定需求中拆解用户场景，完成 AI 产品从概念、流程到界面的体验表达。",
           previewImages: ["assets/projects/optimized/featured-preview-kelu-1600.jpg"],
-          images: makeFeaturedProjectPages("kelu-ai", 5, "jpg"),
+          images: makeFeaturedProjectPages("kelu-ai", 9, "jpg"),
         },
         {
           slug: "novel",
@@ -13749,6 +13914,7 @@
       const contactResumeState = document.querySelector("[data-contact-resume-state]");
       const copyWechatButton = document.querySelector("[data-copy-wechat]");
       const resumeLink = document.querySelector("[data-resume-link]");
+      const heroResumeLink = document.querySelector("[data-hero-resume]");
       const contactAiButton = document.querySelector("[data-contact-ai]");
       const contactLive = document.querySelector("[data-contact-live]");
       const wechatPopover = document.querySelector("[data-wechat-popover]");
@@ -13833,12 +13999,16 @@
           resumeLink?.classList.remove("is-disabled");
           resumeLink?.removeAttribute("aria-disabled");
           resumeLink?.setAttribute("href", contactConfig.resumeUrl);
+          heroResumeLink?.setAttribute("href", contactConfig.resumeUrl);
+          heroResumeLink?.setAttribute("download", "Bai-Qingxin-Resume.pdf");
           if (contactResumeState) {
             contactResumeState.textContent = "Bai-Qingxin-Resume.pdf";
           }
         } else {
           resumeLink?.remove();
           contactResumeState?.closest(".contact-footer-item")?.remove();
+          heroResumeLink?.setAttribute("href", "#contact");
+          heroResumeLink?.setAttribute("aria-label", "联系获取简历");
         }
       };
 
