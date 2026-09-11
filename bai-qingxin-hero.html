@@ -11549,76 +11549,74 @@
 
       /* Hero visual polish: premium editorial rhythm without changing content or assets. */
       .hero {
-        background:
-          radial-gradient(ellipse at 64% 45%, rgba(139, 130, 255, 0.07), transparent 30%),
-          radial-gradient(ellipse at 84% 47%, rgba(100, 170, 255, 0.075), transparent 34%),
-          linear-gradient(90deg, #fbfbfd 0%, #f8f8fb 38%, #f0f2fa 68%, #f7f8fb 100%);
+        background: #ececf6;
       }
 
       .hero::before {
         background:
-          linear-gradient(90deg, rgba(251, 251, 253, 0.98) 0%, rgba(250, 250, 253, 0.94) 37%, rgba(246, 247, 253, 0.46) 54%, rgba(248, 249, 253, 0.1) 70%, transparent 100%),
-          radial-gradient(ellipse at 61% 42%, rgba(139, 130, 255, 0.085), transparent 18%),
-          radial-gradient(ellipse at 76% 45%, rgba(100, 170, 255, 0.06), transparent 28%);
-        opacity: 1;
+          radial-gradient(ellipse at 18% 46%, rgba(244, 244, 251, 0.64), transparent 46%),
+          linear-gradient(90deg, rgba(226, 226, 240, 0.72) 0%, rgba(232, 232, 244, 0.56) 29%, rgba(248, 248, 252, 0.14) 58%, transparent 100%);
+        opacity: 0.9;
       }
 
       .hero::after {
-        height: 34vh;
+        height: 38vh;
         background:
-          radial-gradient(ellipse at 76% 100%, rgba(255, 255, 255, 0.62), transparent 56%),
-          linear-gradient(to top, rgba(246, 247, 252, 0.68), transparent);
-      }
-
-      .hero-reveal::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        z-index: 2;
-        pointer-events: none;
-        background:
-          radial-gradient(circle at 44% 42%, transparent 0 7%, rgba(248, 249, 253, 0.2) 16%, transparent 31%),
-          linear-gradient(90deg, rgba(251, 251, 253, 0.56) 0%, rgba(251, 251, 253, 0.46) 36%, rgba(248, 249, 253, 0.14) 52%, transparent 72%);
+          radial-gradient(ellipse at 68% 100%, rgba(255, 255, 255, 0.72), transparent 58%),
+          linear-gradient(to top, rgba(242, 243, 250, 0.74), transparent);
       }
 
       .hero-reveal img {
-        inset: -2%;
-        width: 104%;
-        height: 104%;
-        object-position: center;
-        transform: translate3d(5.5%, 0, 0) scale(0.93);
-        transform-origin: right center;
-        filter: saturate(0.88) contrast(0.93);
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-position: right center;
+        transform: none;
+        filter: none;
       }
 
       .hero-reveal-after {
-        transition: opacity 160ms ease;
+        transition: opacity 180ms ease;
       }
 
       .hero-copy-block {
-        left: clamp(48px, 6.2vw, 100px);
-        top: clamp(126px, 20vh, 166px);
-        width: min(860px, 48vw);
+        left: clamp(44px, 7vw, 92px);
+        top: clamp(118px, 20vh, 166px);
+        width: min(700px, 55vw);
       }
 
       .hero-kicker {
-        color: rgba(23, 26, 39, 0.48);
+        display: inline-flex;
+        align-items: center;
+        gap: 11px;
+        margin: 0;
+        color: rgba(18, 20, 31, 0.46);
         font-size: 11px;
-        font-weight: 620;
+        font-weight: 720;
         letter-spacing: 0.14em;
+        line-height: 1;
+      }
+
+      .hero-kicker::before {
+        content: "";
+        width: 34px;
+        height: 1px;
+        background: rgba(18, 20, 31, 0.28);
       }
 
       .hero-title {
-        margin-top: clamp(28px, 3vw, 36px);
-        color: #171a27;
-        font-family: "Arial Narrow", "Helvetica Neue", Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        font-size: clamp(76px, 7vw, 108px);
-        font-stretch: condensed;
-        font-weight: 520;
-        letter-spacing: -0.055em;
-        line-height: 0.92;
-        text-transform: uppercase;
-        white-space: nowrap;
+        width: 100%;
+        margin: 28px 0 0;
+        color: #0b0b10;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        font-size: clamp(52px, 5.7vw, 82px);
+        font-weight: 470;
+        letter-spacing: 0.012em;
+        line-height: 1.18;
+        text-align: left;
+        text-transform: none;
+        white-space: normal;
+        text-shadow: none;
       }
 
       .hero-title span {
@@ -11626,38 +11624,41 @@
       }
 
       .hero-title span + span {
-        margin-left: clamp(24px, 2.1vw, 32px);
+        margin-left: 0;
       }
 
       .role {
-        margin-top: clamp(48px, 5.6vh, 56px);
+        margin: clamp(46px, 5.2vh, 54px) 0 0;
         color: rgba(23, 26, 39, 0.72);
-        font-size: clamp(18px, 1.32vw, 20px);
+        font-size: clamp(20px, 1.45vw, 24px);
         font-weight: 500;
+        letter-spacing: 0;
         line-height: 1.35;
+        text-shadow: none;
       }
 
       .hero-copy {
-        margin-top: clamp(10px, 1.1vw, 14px);
-        color: rgba(23, 26, 39, 0.62);
-        font-size: clamp(16px, 1.15vw, 18px);
+        max-width: 680px;
+        margin: clamp(10px, 1.1vw, 14px) 0 0;
+        color: rgba(23, 26, 39, 0.64);
+        font-size: clamp(17px, 1.2vw, 19px);
         font-weight: 400;
         line-height: 1.45;
+        text-shadow: none;
       }
 
       .hero-title em {
-        display: inline-block;
         font-style: normal;
-        background: linear-gradient(90deg, #9b7bff 0%, #6c8fff 100%);
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-        filter: saturate(0.82);
+      }
+
+      .hero-meta-line,
+      .hero-actions {
+        display: revert;
       }
 
       .hero-meta-line {
-        margin: clamp(18px, 2vw, 22px) 0 0;
-        color: rgba(112, 120, 170, 0.62);
+        margin: clamp(20px, 2.1vw, 24px) 0 0;
+        color: rgba(96, 106, 163, 0.52);
         font-size: 11px;
         font-weight: 500;
         letter-spacing: 0.14em;
@@ -11677,10 +11678,10 @@
         align-items: center;
         justify-content: center;
         gap: 14px;
-        height: 52px;
-        padding: 0 clamp(26px, 2.2vw, 32px);
+        height: 54px;
+        padding: 0 clamp(26px, 2.2vw, 34px);
         border-radius: 999px;
-        font-size: clamp(15px, 1vw, 16px);
+        font-size: clamp(14px, 0.95vw, 15px);
         font-weight: 500;
         line-height: 1;
         text-decoration: none;
@@ -11714,57 +11715,6 @@
         border-color: rgba(106, 118, 180, 0.28);
       }
 
-      .hero-side-copy {
-        position: absolute;
-        top: clamp(136px, 18vh, 190px);
-        right: clamp(100px, 10vw, 180px);
-        z-index: 4;
-        margin: 0;
-        color: rgba(99, 109, 166, 0.58);
-        font-size: clamp(10px, 0.8vw, 12px);
-        font-weight: 500;
-        letter-spacing: 0.12em;
-        line-height: 1.7;
-        text-transform: uppercase;
-      }
-
-      .hero-scroll {
-        position: absolute;
-        left: clamp(48px, 6.2vw, 100px);
-        bottom: clamp(48px, 6vh, 64px);
-        z-index: 4;
-        display: inline-flex;
-        align-items: center;
-        gap: 16px;
-        color: rgba(93, 108, 165, 0.55);
-        font-size: 10px;
-        font-weight: 520;
-        letter-spacing: 0.14em;
-        line-height: 1.45;
-        text-decoration: none;
-        text-transform: uppercase;
-      }
-
-      .hero-scroll-icon {
-        position: relative;
-        width: 24px;
-        height: 34px;
-        border: 1px solid rgba(93, 108, 165, 0.44);
-        border-radius: 999px;
-      }
-
-      .hero-scroll-icon::before {
-        content: "";
-        position: absolute;
-        top: 8px;
-        left: 50%;
-        width: 3px;
-        height: 7px;
-        border-radius: 999px;
-        background: rgba(93, 108, 165, 0.48);
-        transform: translateX(-50%);
-      }
-
       .contact {
         min-width: 132px;
         height: 40px;
@@ -11780,52 +11730,63 @@
 
       @media (min-width: 1600px) {
         .hero-copy-block {
-          width: min(900px, 48vw);
+          width: min(700px, 55vw);
         }
 
         .hero-reveal img {
-          transform: translate3d(6%, 0, 0) scale(0.93);
+          transform: none;
         }
       }
 
       @media (max-width: 980px) {
         .hero-copy-block {
-          width: min(680px, 64vw);
+          width: min(700px, 64vw);
         }
 
         .hero-title {
-          font-size: clamp(48px, 6.7vw, 64px);
+          font-size: clamp(44px, 6.4vw, 58px);
         }
 
-        .hero-side-copy {
-          display: none;
-        }
       }
 
       @media (max-width: 620px) {
         .hero-copy-block {
-          top: clamp(108px, 16svh, 142px);
-          width: min(86vw, 360px);
+          left: 22px;
+          top: clamp(96px, 16vh, 132px);
+          width: min(82vw, 460px);
+        }
+
+        .hero-kicker {
+          font-size: 10px;
+          letter-spacing: 0.12em;
+        }
+
+        .hero-kicker::before {
+          width: 26px;
         }
 
         .hero-title {
           margin-top: 22px;
-          font-size: clamp(34px, 10.4vw, 48px);
-          line-height: 1.06;
-          letter-spacing: -0.045em;
+          font-size: clamp(36px, 9.6vw, 56px);
+          line-height: 1.2;
           white-space: normal;
         }
 
         .hero-title span + span {
-          margin-left: 16px;
+          margin-left: 0;
         }
 
         .role {
-          margin-top: clamp(32px, 5svh, 42px);
+          max-width: 76vw;
+          margin-top: clamp(38px, 7vh, 58px);
           font-size: 16px;
+          line-height: 1.4;
         }
 
         .hero-copy {
+          display: block;
+          max-width: 82vw;
+          margin-top: 10px;
           font-size: 14px;
         }
 
@@ -11848,15 +11809,11 @@
           font-size: 14px;
         }
 
-        .hero-scroll {
-          display: none;
-        }
-
         .hero-reveal img {
-          inset: -6%;
-          width: 112%;
-          height: 112%;
-          transform: translate3d(8%, 0, 0) scale(0.96);
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          transform: none;
         }
       }
 
@@ -11889,7 +11846,7 @@
       <section class="hero-stage">
         <div class="hero-copy-block">
           <p class="hero-kicker">01 / HELLO</p>
-          <h1 class="hero-title"><span>Turning fuzzy ideas</span><span>into <em>real products.</em></span></h1>
+          <h1 class="hero-title"><span>Turning fuzzy ideas</span><span>into real products.</span></h1>
           <p class="role">AI Native 复合体验设计师</p>
           <p class="hero-copy">
             Product Thinking × UX/UI × AI Experience
@@ -11897,17 +11854,10 @@
           <p class="hero-meta-line">0 → 1 PRODUCT · AI EXPERIENCE · VIBE CODING</p>
           <div class="hero-actions" aria-label="Hero actions">
             <a class="hero-action hero-action-primary" href="#work">View Selected Work <span>→</span></a>
-            <a class="hero-action hero-action-secondary" href="#contact" data-hero-resume><span aria-hidden="true">↓</span> Download Resume</a>
           </div>
         </div>
-        <p class="hero-side-copy" aria-hidden="true">MORE<br />POSSIBILITIES<br />WITH AI.</p>
-
         <span class="ground" aria-hidden="true"></span>
         <span class="noise" aria-hidden="true"></span>
-        <a class="hero-scroll" href="#about" aria-label="Scroll to About section">
-          <span class="hero-scroll-icon" aria-hidden="true"></span>
-          <span>SCROLL<br />TO EXPLORE</span>
-        </a>
       </section>
     </main>
 
@@ -12983,7 +12933,7 @@
           tags: ["AI体验设计", "人机协同", "0→1产品"],
           value: "沉淀 AI 创作工具的核心工作流，提升内容生成、编辑与管理的效率。",
           previewImages: ["assets/projects/optimized/featured-preview-topick-1600.jpg"],
-          images: makeFeaturedProjectPages("topick-ai", 8),
+          images: makeFeaturedProjectPages("topick-ai", 9),
         },
         {
           slug: "baidu",
