@@ -13639,8 +13639,9 @@
           return;
         }
 
-        const heroBottom = hero?.getBoundingClientRect().bottom ?? 0;
-        const shouldShowAssistant = heroBottom < window.innerHeight * 0.28;
+        const workSection = document.querySelector("#work");
+        const workTop = workSection?.getBoundingClientRect().top ?? Number.POSITIVE_INFINITY;
+        const shouldShowAssistant = workTop < window.innerHeight * 0.82;
         assistant.classList.toggle("is-page-visible", shouldShowAssistant);
         if (!shouldShowAssistant && assistant.classList.contains("is-open")) {
           closeAssistantPanel();
